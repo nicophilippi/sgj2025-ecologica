@@ -21,15 +21,19 @@ public partial class Sim_Timer : Godot.Timer
 
     public void ChangeTimer()
     {
-        if (running)
+        if (base.TimeLeft > 0)
         {
-            tim
-        }
+            base.Stop();
+        } 
+		else 
+		{	
+			base.Start();
+		}
     }
     
     private void Test()
     {
-        Terrain.Hello();
+        GD.Print("Hello World!");
     }
     
     
