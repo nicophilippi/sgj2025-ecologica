@@ -1,26 +1,29 @@
 using Godot;
-using Microsoft.VisualBasic;
+using NewGameProject.sim;
 
 public partial class SimRenderer : Node2D
 {
+    private struct RenderedCell
+    {
+        public Sprite2D Sprite;
+    }
+
+
     [Export] private Texture2D _tex;
-    private Sprite2D[,] _sprites;
+    [Export] private Vector2 _cellSize = new(128f, 128f);
+    private RenderedCell[,] _sprites;
 
 
     public override void _EnterTree()
     {
         base._EnterTree();
 
-        _sprites = new Sprite2D[LoseReferences.SimSize.X, LoseReferences.SimSize.Y];
+        _sprites = new RenderedCell[Simulation.WorldSize, Simulation.WorldSize];
 
-        for (var x = 0; x < LoseReferences.SimSize.X; x++)
-        for (var y = 0; y < LoseReferences.SimSize.Y; y++)
+        for (var x = 0; x < Simulation.WorldSize; x++)
+        for (var y = 0; y < Simulation.WorldSize; y++)
         {
-            var sprite = new Sprite2D();
-            AddChild(sprite);
-            sprite.Position = new Vector2(x, y) * _tex.GetSize();
-            sprite.Texture = _tex;
-            _sprites[x, y] = sprite;
+            _sprites[x, y] = InitCell(new Vector2(x, y) * _cellSize);
         }
     }
 
@@ -29,13 +32,8 @@ public partial class SimRenderer : Node2D
     {
         base._Process(delta);
 
-
-        var visibleRect = GetViewport().GetVisibleRect();
-        var visibleIndices = new Rect2I((Vector2I) (visibleRect.Position / _tex.GetSize()),
-            (Vector2I) (visibleRect.Size / _tex.GetSize()) + Vector2I.One);
-        
-        for (var x = Mathf.Max(visibleIndices.Position.X, 0); x <= Mathf.Min(visibleIndices.End.X, _sprites.GetLength(0) - 1); x++)
-        for (var y = Mathf.Max(visibleIndices.Position.Y, 0); y <= Mathf.Min(visibleIndices.End.Y, _sprites.GetLength(1) - 1); y++)
+        for (var x = 0; x < _sprites.GetLength(0); x++)
+        for (var y = 0; y < _sprites.GetLength(1); y++)
         {
             var sprite = _sprites[x, y];
             var data = LoseReferences.GetTile(x, y);
@@ -44,8 +42,21 @@ public partial class SimRenderer : Node2D
     }
 
 
-    private void DrawCell(Sprite2D sprite, LoseReferences.WhateverTheFuckTileDataLooksLike tileData)
+    private RenderedCell InitCell(Vector2 at)
     {
-        sprite.Modulate = Colors.Green;
+        var o = new RenderedCell();
+
+        o.Sprite = new Sprite2D();
+        AddChild(o.Sprite); // IMPORTANT!
+        o.Sprite.Position = at;
+        o.Sprite.Texture = _tex;
+
+        return o;
+    }
+
+
+    private void DrawCell(RenderedCell rendCell, LoseReferences.WhateverTheFuckTileDataLooksLike tileData)
+    {
+        rendCell.Sprite.Modulate = Colors.Green;
     }
 }

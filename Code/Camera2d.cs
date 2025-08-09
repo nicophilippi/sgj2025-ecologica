@@ -2,6 +2,9 @@ using Godot;
 
 public partial class Camera2d : Camera2D
 {
+    public static Camera2d Instance { get; private set; }
+    
+    
     [Export] private Vector2 _zoomSpeed = Vector2.One;
     [Export] private float _zoomMin = 0.5f;
     [Export] private float _zoomMax = 2f;
@@ -43,5 +46,13 @@ public partial class Camera2d : Camera2D
             Zoom = Vector2.One;
             Position = Vector2.Zero;
         }
+    }
+
+
+    public override void _EnterTree()
+    {
+        base._EnterTree();
+        if (Instance != null) GD.PrintErr("Singleton has second instance!");
+        Instance = this;
     }
 }
