@@ -39,5 +39,4 @@ _zoomMax = 1.0
 
 [node name="CanvasLayer" parent="." instance=ExtResource("5_l8v81")]
 
-[node name="CardManager" parent="CanvasLayer" node_paths=PackedStringArray("_cardPivots") instance=ExtResource("2_pyidc")]
-_cardPivots = []
+[node name="CardManager" parent="CanvasLayer" instance=ExtResource("2_pyidc")]
