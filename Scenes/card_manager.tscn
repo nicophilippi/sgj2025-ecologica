@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cfu50yb8q35q4"]
 
-[ext_resource type="Script" uid="uid://c7lvylxutx2ma" path="res://Code/Cards/CardManager.cs" id="1_pikqg"]
+[ext_resource type="Script" uid="uid://dwmtfpumvqkvi" path="res://Code/Cards/CardManager.cs" id="1_pikqg"]
 [ext_resource type="PackedScene" uid="uid://qblwltx7khel" path="res://Scenes/test_card.tscn" id="2_7ykl4"]
 
 [node name="CardManager" type="Node2D" node_paths=PackedStringArray("_cardPivots")]
@@ -8,6 +8,7 @@ script = ExtResource("1_pikqg")
 _cardPivots = [NodePath("CardPivot1"), NodePath("CardPivot2"), NodePath("CardPivot3"), NodePath("CardPivot4"), NodePath("CardPivot5")]
 _startCards = Array[PackedScene]([ExtResource("2_7ykl4"), ExtResource("2_7ykl4"), ExtResource("2_7ykl4"), ExtResource("2_7ykl4"), ExtResource("2_7ykl4")])
 _allCards = Array[PackedScene]([ExtResource("2_7ykl4")])
+ScaleFix = 10.0
 
 [node name="CardPivot1" type="Node2D" parent="."]
 position = Vector2(166, 619)
