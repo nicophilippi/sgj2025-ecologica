@@ -3,11 +3,11 @@ using System;
 
 public partial class Root : Node
 {
-    private Sim_Timer timer;
+    private SimTimer timer;
     public override void _EnterTree()
     {
         base._EnterTree();
-        timer = new Sim_Timer();
+        timer = new SimTimer();
         AddChild(timer);
         timer.ChangeTimer();
     }
