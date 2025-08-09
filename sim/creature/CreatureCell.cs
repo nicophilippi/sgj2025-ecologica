@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Godot;
 using NewGameProject.sim.intention;
 using NewGameProject.sim.intention.cell;
 using NewGameProject.sim.plant;
@@ -134,14 +135,28 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
     )
     {
         PlantCell plantCell = floraLayer[x, y];
+        CreatureCell creatureCell = faunaLayer[x, y];
+        
+        if(creatureCell == null || creatureCell.Type == CreatureCellType.Empty) return;
 
-        if (plantCell.Type == PlantCellType.Grass)
+        if (creatureCell.Type == CreatureCellType.Sheep)
         {
-            
-        }
-        else
-        {
-            
+            if (plantCell == null || plantCell.Type == PlantCellType.Barren)
+            {
+                creatureCell.Quantity -= Constants.HUNGER_DAMAGE;
+                if (creatureCell.Quantity <= 0)
+                {
+                    faunaLayer[x, y] = new EmptyCell();
+                }
+            }
+            else
+            {
+                plantCell.Health -= creatureCell.Quantity = 1 + Mathf.RoundToInt((float) creatureCell.Quantity / creatureCell.MaxQuantity);;
+                if (plantCell.Health <= 0)
+                {
+                    floraLayer[x, y] = new BarrenCell();
+                }
+            }
         }
     }
 
@@ -154,7 +169,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
         ProcreateIntentionCell[,] intentionLayer
     )
     {
-        // Not yet implemented...
+        
     }
 
     
