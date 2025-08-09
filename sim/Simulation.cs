@@ -48,7 +48,7 @@ public static class Simulation
             }
         }
 
-        FloraLayer[2, 2] = new GrassCell();
+        FloraLayer[35, 35] = new GrassCell();
     }
 
     public static void OnTick()
@@ -103,6 +103,8 @@ public static class Simulation
         OnInit();
 
         int i = 0;
-        while (i++ < 100) OnTick();
+        while (i++ < 50) OnTick();
+        
+        Console.WriteLine("Done!");
     }
 }
