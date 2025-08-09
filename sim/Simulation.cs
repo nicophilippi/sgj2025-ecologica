@@ -8,7 +8,7 @@ namespace NewGameProject.sim;
 
 public static class Simulation
 {
-    private const int WorldSize = 70;
+    public const int WorldSize = 70;
     
     private static readonly TerrainCell[,] TerraLayer = new TerrainCell[WorldSize, WorldSize];
     private static readonly PlantCell[,] FloraLayer = new PlantCell[WorldSize, WorldSize];

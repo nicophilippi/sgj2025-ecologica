@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using DefaultNamespace;
 
 public partial class Sim_Timer : Godot.Timer
 {
