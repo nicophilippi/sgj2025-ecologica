@@ -18,24 +18,30 @@ public partial class Camera2d : Camera2D
         if (Input.IsActionJustPressed("zoom in"))
         {
             Zoom -= _zoomSpeed;
-        } else if (Input.IsActionJustPressed("zoom out"))
+        } if (Input.IsActionJustPressed("zoom out"))
         {
             Zoom += _zoomSpeed;
-        } else if (Input.IsActionPressed("camera up"))
+        } if (Input.IsActionPressed("camera up"))
         {
-            Position += upstep * (float) delta;
-        } else if (Input.IsActionPressed("camera down"))
+            Position += upstep / Zoom * (float) delta;
+        } if (Input.IsActionPressed("camera down"))
         {
-            Position += downstep * (float) delta;
-        } else if (Input.IsActionPressed("camera left"))
+            Position += downstep / Zoom * (float) delta;
+        } if (Input.IsActionPressed("camera left"))
         {
-            Position += leftstep * (float) delta;
-        } else if (Input.IsActionPressed("camera right"))
+            Position += leftstep / Zoom * (float) delta;
+        } if (Input.IsActionPressed("camera right"))
         {
-            Position += rightstep * (float) delta;
+            Position += rightstep / Zoom * (float) delta;
         }
 
         Zoom = new Vector2(Mathf.Clamp(Zoom.X, _zoomMin, _zoomMax),
             Mathf.Clamp(Zoom.Y, _zoomMin, _zoomMax));
+
+        if (Input.IsActionPressed("camera return"))
+        {
+            Zoom = Vector2.One;
+            Position = Vector2.Zero;
+        }
     }
 }

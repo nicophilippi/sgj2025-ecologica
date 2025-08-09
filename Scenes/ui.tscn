@@ -37,14 +37,15 @@ text = "Gras
 "
 scroll_active = false
 
-[node name="Controls" type="RichTextLabel" parent="."]
+[node name="ControlsRundown" type="RichTextLabel" parent="."]
 modulate = Color(1, 1, 1, 0.439216)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 28.0
-offset_top = 17.0
+offset_left = 48.0
+offset_top = 45.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "WASD: Movement
-"
+theme_override_font_sizes/normal_font_size = 25
+text = "WASD: Move Camera
+H: Reset Camera"
