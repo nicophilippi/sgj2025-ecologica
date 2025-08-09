@@ -1,8 +1,11 @@
 ﻿using System;
+using Godot;
 using NewGameProject.sim.creature;
 using NewGameProject.sim.intention;
+using NewGameProject.sim.intention.cell;
 using NewGameProject.sim.plant;
 using NewGameProject.sim.terrain;
+using NewGameProject.sim.util;
 
 namespace NewGameProject.sim;
 
@@ -10,11 +13,15 @@ public static class Simulation
 {
     public const int WorldSize = 70;
     
-    private static readonly TerrainCell[,] TerraLayer = new TerrainCell[WorldSize, WorldSize];
+    private static readonly TerrainType[,] TerraLayer = new TerrainType[WorldSize, WorldSize];
     private static readonly PlantCell[,] FloraLayer = new PlantCell[WorldSize, WorldSize];
     private static readonly CreatureCell[,] FaunaLayer = new CreatureCell[WorldSize, WorldSize];
 
-    private static readonly IntentionCell[,] IntentionLayer = new IntentionCell[WorldSize, WorldSize];
+    private static readonly MoveIntentionCell[,] MoveIntentionLayer = new MoveIntentionCell[WorldSize, WorldSize];
+    private static readonly EatIntentionCell[,] EatIntentionLayer = new EatIntentionCell[WorldSize, WorldSize];
+    private static readonly ProcreateIntentionCell[,] ProcreateIntentionLayer = new ProcreateIntentionCell[WorldSize, WorldSize];
+
+    private static readonly Random Random = new();
 
     private static void ForEachWorldPosition(Action<int, int> action)
     {
@@ -27,8 +34,53 @@ public static class Simulation
         }
     }
 
+    public static void OnInit()
+    {
+        
+    }
+
     public static void OnTick()
     {
-        ForEachWorldPosition((x, y) => TerraLayer[x, y].ComputeMoveIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, IntentionLayer));
+        ForEachWorldPosition((x, y) => FloraLayer[x, y].ComputeMoveIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
+        ForEachWorldPosition((x, y) => MoveIntentionLayer[x, y].DeconflictMoveIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
+        
+        ForEachWorldPosition((x, y) => FaunaLayer[x, y].ComputeMoveIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
+        ForEachWorldPosition((x, y) => MoveIntentionLayer[x, y].DeconflictMoveIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
+        
+        
+        
+        ForEachWorldPosition((x, y) => FloraLayer[x, y].ComputeEatIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
+        ForEachWorldPosition((x, y) => EatIntentionLayer[x, y].DeconflictEatIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
+        
+        ForEachWorldPosition((x, y) => FaunaLayer[x, y].ComputeEatIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
+        ForEachWorldPosition((x, y) => EatIntentionLayer[x, y].DeconflictEatIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
+        
+        
+        
+        ForEachWorldPosition((x, y) => FloraLayer[x, y].ComputeProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
+        ForEachWorldPosition((x, y) => ProcreateIntentionLayer[x, y].DeconflictProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
+        
+        ForEachWorldPosition((x, y) => FaunaLayer[x, y].ComputeProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
+        ForEachWorldPosition((x, y) => ProcreateIntentionLayer[x, y].DeconflictProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
     }
+    
+    
+    
+    public static TerrainType GetTerrainCell(SimulationPosition i) => TerraLayer[i.X, i.Y];
+    
+    public static PlantCell GetPlantCell(SimulationPosition i) => FloraLayer[i.X, i.Y];
+    
+    public static CreatureCell GetCreatureCell(SimulationPosition i) => FaunaLayer[i.X, i.Y];
+
+    
+    
+    public static void SetTerrainCell(SimulationPosition position, TerrainType terrainType) => TerraLayer[position.X, position.Y] = terrainType;
+
+    public static void SetPlantCell(SimulationPosition position, PlantCell cell) => FloraLayer[position.X, position.Y] = cell;
+
+    public static void SetCreatureCell(SimulationPosition position, CreatureCell cell) => FaunaLayer[position.X, position.Y] = cell;
+
+
+
+    public static int RandomIntBetween(int min, int max) => Random.Next(min, max);
 }

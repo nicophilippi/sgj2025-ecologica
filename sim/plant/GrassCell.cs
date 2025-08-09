@@ -1,20 +1,11 @@
-﻿using NewGameProject.sim.creature;
-using NewGameProject.sim.intention;
-using NewGameProject.sim.terrain;
+﻿using NewGameProject.sim.terrain;
 
 namespace NewGameProject.sim.plant;
 
-public class GrassCell(int health) : PlantCell(health)
+public class GrassCell() : PlantCell(PlantCellType.Grass, 5)
 {
-    public override void ComputeMoveIntentions(
-        int x,
-        int y,
-        TerrainCell[,] terraLayer,
-        PlantCell[,] floraLayer,
-        CreatureCell[,] faunaLayer,
-        IntentionCell[,] intentionLayer
-    )
+    protected override bool IsHabitable(TerrainType terrainCell)
     {
-        
+        return TerrainTypeUtil.Humidity(terrainCell) >= 10 && TerrainTypeUtil.Temperature(terrainCell) is >= 0 and <= 40;
     }
 }

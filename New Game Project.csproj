@@ -6,6 +6,5 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="sim\creature\Creature.cs" />
-    <Compile Remove="sim\terrain\TerrainType.cs" />
   </ItemGroup>
 </Project>

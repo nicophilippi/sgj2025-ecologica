@@ -2,9 +2,8 @@
 
 namespace NewGameProject.sim.intention;
 
-public class MoveIntention : Intention
+public class MoveIntention(SimulationPosition fromPosition, int quantity)
 {
-    private SimulationPosition FromPosition { get; set; }
-    private SimulationDirection Direction { get; set; }
-    private int Quantity { get; set; }
+    private SimulationPosition FromPosition { get; set; } = fromPosition;
+    private int Quantity { get; set; } = quantity;
 }

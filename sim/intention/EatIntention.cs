@@ -1,6 +1,8 @@
-﻿namespace NewGameProject.sim.intention;
+﻿using NewGameProject.sim.util;
 
-public class EatIntention : Intention
+namespace NewGameProject.sim.intention;
+
+public class EatIntention
 {
-    
+    private SimulationLayer Layer { get; set; }
 }
