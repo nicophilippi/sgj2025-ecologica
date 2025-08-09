@@ -39,10 +39,14 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
             bestAttractiveness = 0,
             worstAttractiveness = 0;
 
+        int
+            xFlip = Simulation.RandomIntBetween(0, 100) < 50 ? -1 : 1,
+            yFlip = Simulation.RandomIntBetween(0, 100) < 50 ? -1 : 1;
+
         // Remember best and worst positions in range
-        for (int currX = x - VisionRange; currX <= x + VisionRange; ++currX)
+        for (int currX = x - VisionRange*xFlip; xFlip == 1 ? currX <= x + VisionRange : currX >= x - VisionRange; currX += xFlip)
         {
-            for (int currY = y - VisionRange; currY <= y + VisionRange; ++currY)
+            for (int currY = y - VisionRange*yFlip; yFlip == 1 ? currY <= y + VisionRange : currY >= y - VisionRange; currY += yFlip)
             {
                 if (currX == x && currY == y) continue;
                 if (currX is < 0 or >= Simulation.WorldSize || currY is < 0 or >= Simulation.WorldSize) continue;
@@ -51,13 +55,13 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
                 var currAttractiveness = ComputeTileAttractiveness(new SimulationPosition(currX, currY),
                     terraLayer, floraLayer, faunaLayer);
 
-                if (currAttractiveness > bestAttractiveness || (currAttractiveness == bestAttractiveness && Simulation.RandomIntBetween(0, 100) < 50))
+                if (currAttractiveness > bestAttractiveness)
                 {
                     bestAttractiveness = currAttractiveness;
                     bestPosition = new SimulationPosition(currX, currY);
                 }
 
-                if (currAttractiveness < worstAttractiveness || (currAttractiveness == bestAttractiveness && Simulation.RandomIntBetween(0, 100) < 50))
+                if (currAttractiveness < worstAttractiveness)
                 {
                     worstAttractiveness = currAttractiveness;
                     worstPosition = new SimulationPosition(currX, currY);
@@ -130,8 +134,6 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
         (MoveIntention move, int destX, int destY) = moveIntentions[moveIntentionIndex];
         
         intentionLayer[destX, destY].AddMoveIntention(move);
-        
-        GD.Print("Moving");
     }
 
     private int SheepMoveQuantity()
