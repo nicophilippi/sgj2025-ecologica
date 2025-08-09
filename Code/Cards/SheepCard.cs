@@ -8,6 +8,7 @@ public partial class SheepCard : SetCard
     
     public override void Set(Vector2I where)
     {
+        GD.Print(where);
         Simulation.SetCreatureCell(where, new SheepCell(HowMany));
     }
 }

@@ -17,10 +17,7 @@ public abstract partial class SetCard : Card
         for (var x = mouseIndex.X - AddRadius; x <= mouseIndex.X + AddRadius; x++)
         for (var y = mouseIndex.Y - AddRadius; y <= mouseIndex.Y + AddRadius; y++)
         {
-            Simulation.SetPlantCell(new Vector2I(x, y), new GrassCell
-            {
-                Health = GrassCell.MAX_HEALTH,
-            });
+            Set(new Vector2I(x, y));
         }
     }
 
