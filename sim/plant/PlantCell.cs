@@ -54,7 +54,7 @@ public abstract class PlantCell(PlantCellType type, int maxHealth) : Cell
 
         if (Health == 0)
         {
-            floraLayer[currPosition.X, currPosition.Y] = new BarrenCell();
+            floraLayer[currPosition.X, currPosition.Y] = null;
         }
 
         if (Health < MaxHealth)
@@ -66,7 +66,7 @@ public abstract class PlantCell(PlantCellType type, int maxHealth) : Cell
         {
             var neighborCell = terraLayer[neighborPosition.X, neighborPosition.Y];
 
-            if (!IsHabitable(neighborCell) || floraLayer[neighborPosition.X, neighborPosition.Y].Type != PlantCellType.Barren) return false;
+            if (!IsHabitable(neighborCell) || floraLayer[neighborPosition.X, neighborPosition.Y] != null) return false;
             
             intentionLayer[neighborPosition.X, neighborPosition.Y].AddProcreateIntention(new ProcreateIntention(
                 currPosition,

@@ -22,9 +22,6 @@ public partial class SimRenderer : Node2D
     {
         base._EnterTree();
         
-        // generate
-        Simulation.OnInit();
-
         _sprites = new RenderedCell[Simulation.WorldSize, Simulation.WorldSize];
 
         for (var x = 0; x < Simulation.WorldSize; x++)
@@ -66,7 +63,7 @@ public partial class SimRenderer : Node2D
     private void DrawCell(RenderedCell rendCell, CreatureCell creature, PlantCell plant, TerrainType terrain)
     {
         // Plants
-        if (plant == null || plant.Type == PlantCellType.Barren)
+        if (plant == null)
         {
             rendCell.Sprite.Texture = _barren;
         }

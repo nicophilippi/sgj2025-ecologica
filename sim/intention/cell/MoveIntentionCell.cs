@@ -42,16 +42,20 @@ public struct MoveIntentionCell()
                 fromPositionA = intentionA.FromPosition,
                 fromPositionB = intentionB.FromPosition;
 
-            CreatureCellType
-                creatureCellTypeA = faunaLayer[fromPositionA.X, fromPositionA.Y].Type,
-                creatureCellTypeB = faunaLayer[fromPositionB.X, fromPositionB.Y].Type;
+            CreatureCell
+                creatureCellA = faunaLayer[fromPositionA.X, fromPositionA.Y],
+                creatureCellB = faunaLayer[fromPositionB.X, fromPositionB.Y];
             
-            return CreatureCellTypeUtil.MovePriority(creatureCellTypeA) -
-                   CreatureCellTypeUtil.MovePriority(creatureCellTypeB);
+            return CreatureCellTypeUtil.MovePriority(creatureCellA) - CreatureCellTypeUtil.MovePriority(creatureCellB);
         });
 
         MoveIntention winnerIntention = Intentions[^1];
         CreatureCell winnerCreatureCell = faunaLayer[winnerIntention.FromPosition.X, winnerIntention.FromPosition.Y];
+
+        if (winnerCreatureCell == null)
+        {
+            throw new NullReferenceException("Winner creature cell was null when deconflicting move intentions!");
+        }
 
         winnerCreatureCell.Quantity -= winnerIntention.Quantity;
 

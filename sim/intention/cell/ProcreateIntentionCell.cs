@@ -45,12 +45,11 @@ public struct ProcreateIntentionCell()
                     fromPositionA = intentionA.FromPosition,
                     fromPositionB = intentionB.FromPosition;
 
-                PlantCellType
-                    plantCellTypeA = floraLayer[fromPositionA.X, fromPositionA.Y].Type,
-                    plantCellTypeB = floraLayer[fromPositionB.X, fromPositionB.Y].Type;
+                PlantCell
+                    plantCellA = floraLayer[fromPositionA.X, fromPositionA.Y],
+                    plantCellB = floraLayer[fromPositionB.X, fromPositionB.Y];
 
-                return PlantCellTypeUtil.ProcreatePriority(plantCellTypeA) -
-                       PlantCellTypeUtil.ProcreatePriority(plantCellTypeB);
+                return PlantCellTypeUtil.ProcreatePriority(plantCellA) - PlantCellTypeUtil.ProcreatePriority(plantCellB);
             },
             SimulationLayer.Fauna => (intentionA, intentionB) =>
             {
@@ -58,14 +57,13 @@ public struct ProcreateIntentionCell()
                     fromPositionA = intentionA.FromPosition,
                     fromPositionB = intentionB.FromPosition;
 
-                CreatureCellType
-                    creatureCellTypeA = faunaLayer[fromPositionA.X, fromPositionA.Y].Type,
-                    creatureCellTypeB = faunaLayer[fromPositionB.X, fromPositionB.Y].Type;
+                CreatureCell
+                    creatureCellA = faunaLayer[fromPositionA.X, fromPositionA.Y],
+                    creatureCellB = faunaLayer[fromPositionB.X, fromPositionB.Y];
 
-                return CreatureCellTypeUtil.ProcreatePriority(creatureCellTypeA) -
-                       CreatureCellTypeUtil.ProcreatePriority(creatureCellTypeB);
+                return CreatureCellTypeUtil.ProcreatePriority(creatureCellA) - CreatureCellTypeUtil.ProcreatePriority(creatureCellB);
             },
-            _ => throw new Exception("")
+            _ => throw new ArgumentOutOfRangeException("")
         };
         
         Intentions.Sort(comparison);
@@ -76,11 +74,15 @@ public struct ProcreateIntentionCell()
         {
             case SimulationLayer.Flora:
                 PlantCell winnerPlantCell = floraLayer[winnerIntention.FromPosition.X, winnerIntention.FromPosition.Y];
+
+                if (winnerPlantCell == null)
+                {
+                    throw new NullReferenceException("Winner plant cell was null when deconflicting procreate intentions!");
+                }
                 
                 floraLayer[x, y] = winnerPlantCell.Type switch
                 {
                     PlantCellType.Grass => new GrassCell(),
-                    PlantCellType.Barren => new BarrenCell(),
                     _ => throw new ArgumentOutOfRangeException("")
                 };
                 
@@ -89,10 +91,14 @@ public struct ProcreateIntentionCell()
             case SimulationLayer.Fauna:
                 CreatureCell winnerCreatureCell = faunaLayer[winnerIntention.FromPosition.X, winnerIntention.FromPosition.Y];
 
+                if (winnerCreatureCell == null)
+                {
+                    throw new NullReferenceException("Winner creature cell was null when deconflicting procreate intentions!");
+                }
+
                 faunaLayer[x, y] = winnerCreatureCell.Type switch
                 {
                     CreatureCellType.Sheep => new SheepCell(1),
-                    CreatureCellType.Empty => new EmptyCell(),
                     _ => throw new ArgumentOutOfRangeException("")
                 };
                 

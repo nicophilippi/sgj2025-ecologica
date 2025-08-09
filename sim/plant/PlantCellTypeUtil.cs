@@ -2,10 +2,14 @@
 
 public static class PlantCellTypeUtil
 {
-    public static int ProcreatePriority(PlantCellType type) => type switch
+    public static int ProcreatePriority(PlantCell plantCell)
     {
-        PlantCellType.Barren => 0,
-        PlantCellType.Grass => 1,
-        _ => 0
-    };
+        if (plantCell == null) return -1;
+
+        return plantCell.Type switch
+        {
+            PlantCellType.Grass => 2,
+            _ => -1
+        };
+    }
 }

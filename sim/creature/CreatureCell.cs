@@ -13,7 +13,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
     
     public int Quantity { get; set; } = quantity;
     public int MaxQuantity { get; } = maxQuantity;
-    public int Hunger { get; set; } = 0;
+    public int Saturation { get; set; } = 0;
     public int VisionRange { get; } = visionRange;
     
     public SimulationPosition FocusPosition = new(0, 0);
@@ -28,9 +28,6 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
         MoveIntentionCell[,] intentionLayer
     )
     {
-        // If there's no creature, we can't do anything :(
-        if (Type == CreatureCellType.Empty) return;
-        
         SimulationPosition
             myPosition = new(x, y),
             bestPosition = myPosition,
@@ -131,16 +128,6 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
         EatIntentionCell[,] intentionLayer
     )
     {
-        PlantCell plantCell = floraLayer[x, y];
-
-        if (plantCell.Type == PlantCellType.Grass)
-        {
-            
-        }
-        else
-        {
-            
-        }
     }
 
     public override void ComputeProcreateIntentions(

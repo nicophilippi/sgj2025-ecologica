@@ -2,6 +2,5 @@
 
 public enum CreatureCellType
 {
-    Empty,
     Sheep
 }
