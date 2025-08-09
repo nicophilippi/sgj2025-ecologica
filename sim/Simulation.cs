@@ -54,20 +54,16 @@ public static class Simulation
 
     public static void OnTick()
     {
-        ForEachWorldPosition((x, y) => FaunaLayer[x, y].ComputeMoveIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
+        ForEachWorldPosition((x, y) => FaunaLayer[x, y]?.ComputeMoveIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
         ForEachWorldPosition((x, y) => MoveIntentionLayer[x, y].DeconflictMoveIntentions(x, y, SimulationLayer.Fauna, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
         
-        
-        
-        ForEachWorldPosition((x, y) => FaunaLayer[x, y].ComputeEatIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
+        ForEachWorldPosition((x, y) => FaunaLayer[x, y]?.ComputeEatIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
         ForEachWorldPosition((x, y) => EatIntentionLayer[x, y].DeconflictEatIntentions(x, y, SimulationLayer.Fauna, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
         
-        
-        
-        ForEachWorldPosition((x, y) => FloraLayer[x, y].ComputeProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
+        ForEachWorldPosition((x, y) => FloraLayer[x, y]?.ComputeProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
         ForEachWorldPosition((x, y) => ProcreateIntentionLayer[x, y].DeconflictProcreateIntentions(x, y, SimulationLayer.Flora, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
         
-        ForEachWorldPosition((x, y) => FaunaLayer[x, y].ComputeProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
+        ForEachWorldPosition((x, y) => FaunaLayer[x, y]?.ComputeProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
         ForEachWorldPosition((x, y) => ProcreateIntentionLayer[x, y].DeconflictProcreateIntentions(x, y, SimulationLayer.Fauna, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
     }
     

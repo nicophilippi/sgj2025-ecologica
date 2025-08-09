@@ -85,19 +85,19 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
             // Move towards focus position
             if (x < FocusPosition.X && x < Simulation.WorldSize - 1)
             {
-                intentionLayer[x + 1, y].AddMoveIntention(new MoveIntention(myPosition, Quantity));
+                intentionLayer[x + 1, y].AddMoveIntention(new MoveIntention(myPosition, SheepMoveQuantity()));
             }
             else if (x > FocusPosition.X && x > 0)
             {
-                intentionLayer[x - 1, y].AddMoveIntention(new MoveIntention(myPosition, Quantity));
+                intentionLayer[x - 1, y].AddMoveIntention(new MoveIntention(myPosition, SheepMoveQuantity()));
             }
             else if (y < FocusPosition.Y && y < Simulation.WorldSize - 1)
             {
-                intentionLayer[x, y + 1].AddMoveIntention(new MoveIntention(myPosition, Quantity));
+                intentionLayer[x, y + 1].AddMoveIntention(new MoveIntention(myPosition, SheepMoveQuantity()));
             }
             else if (y > FocusPosition.Y && y > 0)
             {
-                intentionLayer[x, y - 1].AddMoveIntention(new MoveIntention(myPosition, Quantity));
+                intentionLayer[x, y - 1].AddMoveIntention(new MoveIntention(myPosition, SheepMoveQuantity()));
             }
         }
         else
@@ -120,6 +120,12 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
                 intentionLayer[x, y + 1].AddMoveIntention(new MoveIntention(myPosition, Quantity));
             }
         }
+    }
+
+    private int SheepMoveQuantity()
+    {
+        if (Quantity < 5) return Quantity;
+        return 5;
     }
 
     public override void ComputeEatIntentions(
@@ -148,7 +154,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
             }
             else
             {
-                plantCell.Health -= creatureCell.Quantity = 1 + Mathf.RoundToInt((float) creatureCell.Quantity / creatureCell.MaxQuantity);;
+                plantCell.Health -= 1 + Mathf.RoundToInt((float) creatureCell.Quantity / creatureCell.MaxQuantity);
                 if (plantCell.Health <= 0)
                 {
                     floraLayer[x, y] = null;
@@ -166,6 +172,17 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
         ProcreateIntentionCell[,] intentionLayer
     )
     {
+        var plantCell = floraLayer[x, y];
+        var creatureCell = faunaLayer[x, y];
+
+        if (plantCell != null)
+        {
+            if (creatureCell.Quantity < creatureCell.MaxQuantity)
+            {
+                GD.Print(creatureCell.Quantity);
+                creatureCell.Quantity++;
+            }
+        }
         
     }
 

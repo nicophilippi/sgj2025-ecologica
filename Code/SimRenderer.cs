@@ -73,14 +73,16 @@ public partial class SimRenderer : Node2D
         }
         else if (plant.Type == PlantCellType.Grass)
         {
-            var i = Mathf.FloorToInt(plant.Health / (float)(plant.MaxHealth + 1) * 4f);
+            var hp = Mathf.Min(plant.Health, plant.MaxHealth);
+            var i = Mathf.FloorToInt(hp / (float)(plant.MaxHealth + 1) * 4f);
             rendCell.Ground.Texture = _grass[i];
         } 
         
         // Animals
         if (creature != null && creature.Type == CreatureCellType.Sheep)
         {
-            var i = Mathf.FloorToInt(creature.Quantity / (float)(creature.MaxQuantity + 1) * 4f);
+            var quant = Mathf.Min(creature.Quantity, creature.MaxQuantity);
+            var i = Mathf.FloorToInt(quant / (float)(creature.MaxQuantity + 1) * 4f);
             rendCell.Animal.Texture = _sheep[i];
         }
         else

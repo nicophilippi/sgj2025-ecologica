@@ -22,6 +22,22 @@ public struct MoveIntentionCell()
         MoveIntentionCell[,] intentionLayer
     )
     {
+        var dic = new Dictionary<CreatureCellType, MoveIntention>();
+
+        foreach (var i in Intentions)
+        {
+            var creatureCell = faunaLayer[i.FromPosition.X, i.FromPosition.Y];
+            var maxQuant = creatureCell.MaxQuantity;
+            var key = creatureCell.Type;
+            if (!dic.TryAdd(key, i))
+            {
+                dic[key].Quantity += i.Quantity;
+                if (dic[key].Quantity > maxQuant) dic[key].Quantity = maxQuant;
+            }
+        }
+        Intentions.Clear();
+        Intentions.AddRange(dic.Values);
+        
         // No intentions to deconflict
         if (Intentions.Count == 0)
         {
@@ -58,7 +74,7 @@ public struct MoveIntentionCell()
         }
 
         winnerCreatureCell.Quantity -= winnerIntention.Quantity;
-        if (winnerCreatureCell.Quantity == 0)
+        if (winnerCreatureCell.Quantity <= 0)
         {
             faunaLayer[winnerIntention.FromPosition.X, winnerIntention.FromPosition.Y] = null;
         }
@@ -66,7 +82,7 @@ public struct MoveIntentionCell()
         faunaLayer[x, y] = winnerCreatureCell.Type switch
         {
             CreatureCellType.Sheep => new SheepCell(winnerIntention.Quantity),
-            _ => throw new Exception("")
+            _ => throw new Exception("SHOULDNOTHAPPEN")
         };
             
         Intentions.Clear();
@@ -74,6 +90,7 @@ public struct MoveIntentionCell()
 
     public void AddMoveIntention(MoveIntention intention)
     {
+        if (intention.Quantity < 0) throw new Exception("Negative amount of move");
         Intentions.Add(intention);
     }
 }
