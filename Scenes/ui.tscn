@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd0a4hnukyaay"]
+
+[ext_resource type="Script" uid="uid://c2av3xc2i7lq6" path="res://Code/Tooltip.cs" id="1_jxero"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Tooltip" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -183.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("1_jxero")
+
+[node name="Background" type="ColorRect" parent="Tooltip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.329158, 0.329158, 0.329158, 1)
+
+[node name="Info" type="RichTextLabel" parent="Tooltip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "Gras
+[color=red]-100[/color]: No Water
+"
+scroll_active = false
