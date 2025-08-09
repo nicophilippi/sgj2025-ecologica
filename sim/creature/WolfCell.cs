@@ -19,7 +19,7 @@ public class WolfCell(int quantity) : CreatureCell(CreatureCellType.Wolf, quanti
                         || v.Y < 0 || v.Y >= fauna.GetLength(0))
                 return false;
             var creature = fauna[v.X, v.Y];
-            if (creature.Type == CreatureCellType.Sheep) attractiveness += creature.Quantity;
+            if (creature != null && creature.Type == CreatureCellType.Sheep) attractiveness += creature.Quantity;
             return false;
         });
 

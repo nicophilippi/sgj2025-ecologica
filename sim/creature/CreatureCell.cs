@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Godot;
 using NewGameProject.sim.intention;
 using NewGameProject.sim.intention.cell;
@@ -172,6 +173,37 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
                 }
             }
         }
+        else if (creatureCell.Type == CreatureCellType.Wolf)
+        {
+            var i = new SimulationPosition(x, y);
+            var availableFoodAt = new List<SimulationPosition>();
+            i.ForEachDirectionBreaking(p =>
+            {
+                if (p.X < 0 || p.X >= faunaLayer.GetLength(0)
+                         || p.Y < 0 || p.Y >= faunaLayer.GetLength(0))
+                    return false;
+                var c = faunaLayer[p.X, p.Y];
+                if (c != null && c.Type == CreatureCellType.Sheep) availableFoodAt.Add(i);
+                return false;
+            });
+
+            if (availableFoodAt.Count == 0)
+            {
+                // No Food :(
+                creatureCell.Quantity -= Constants.HUNGER_DAMAGE;
+                if (creatureCell.Quantity <= 0) faunaLayer[x, y] = null;
+            }
+            else
+            {
+                // Food :)
+                var chosenFoodAt = availableFoodAt[GD.RandRange(0, availableFoodAt.Count - 1)];
+                var chosenFood = faunaLayer[chosenFoodAt.X, chosenFoodAt.Y];
+
+                chosenFood.Quantity -= Constants.FEEDING_DAMAGE;
+                if (chosenFood.Quantity <= 0) faunaLayer[chosenFoodAt.X, chosenFoodAt.Y] = null;
+            }
+        }
+        else throw new Exception("NEW CREATURE TYPE DOES NOT HAVE EAT INTENTIONS HANDLED");
     }
 
     public override void ComputeProcreateIntentions(
@@ -183,18 +215,10 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
         ProcreateIntentionCell[,] intentionLayer
     )
     {
-        var plantCell = floraLayer[x, y];
         var creatureCell = faunaLayer[x, y];
-
-        if (plantCell != null)
-        {
-            if (creatureCell.Quantity < creatureCell.MaxQuantity)
-            {
-                GD.Print(creatureCell.Quantity);
-                creatureCell.Quantity++;
-            }
-        }
-        
+        if (creatureCell == null) return;
+        creatureCell.Quantity += Constants.FERTILITY;
+        if (creatureCell.Quantity > creatureCell.MaxQuantity) creatureCell.Quantity = creatureCell.MaxQuantity;
     }
 
     
