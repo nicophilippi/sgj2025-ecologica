@@ -2,7 +2,7 @@ using Godot;
 using NewGameProject.sim;
 using NewGameProject.sim.plant;
 
-public partial class GrassCard : Card
+public abstract partial class SetCard : Card
 {
     // 0 => 1x1; 1 => 3x3; 2 => 5x5
     [Export] public int AddRadius = 0;
@@ -23,4 +23,7 @@ public partial class GrassCard : Card
             });
         }
     }
+
+
+    public abstract void Set(Vector2I where);
 }
