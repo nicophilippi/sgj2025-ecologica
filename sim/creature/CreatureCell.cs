@@ -44,20 +44,18 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
             for (int currY = y - VisionRange; currY <= y + VisionRange; ++currY)
             {
                 if (currX == x && currY == y) continue;
-                
                 if (currX is < 0 or >= Simulation.WorldSize || currY is < 0 or >= Simulation.WorldSize) continue;
-
                 if (faunaLayer[currX, currY] != null && faunaLayer[currX, currY] != null) continue;
                 
                 int currAttractiveness = ComputeTileAttractiveness(terraLayer[currX, currY], floraLayer[currX, currY], faunaLayer[currX, currY]);
 
-                if (currAttractiveness > bestAttractiveness)
+                if (currAttractiveness > bestAttractiveness || (currAttractiveness == bestAttractiveness && Simulation.RandomIntBetween(0, 100) < 50))
                 {
                     bestAttractiveness = currAttractiveness;
                     bestPosition = new SimulationPosition(currX, currY);
                 }
 
-                if (currAttractiveness < worstAttractiveness)
+                if (currAttractiveness < worstAttractiveness || (currAttractiveness == bestAttractiveness && Simulation.RandomIntBetween(0, 100) < 50))
                 {
                     worstAttractiveness = currAttractiveness;
                     worstPosition = new SimulationPosition(currX, currY);
@@ -80,24 +78,26 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
             FocusAttractiveness = worstAttractiveness;
         }
 
+        List<(MoveIntention move, int destX, int destY)> moveIntentions = new();
+        
         if (FocusAttractiveness > 0)
         {
             // Move towards focus position
             if (x < FocusPosition.X && x < Simulation.WorldSize - 1)
             {
-                intentionLayer[x + 1, y].AddMoveIntention(new MoveIntention(myPosition, SheepMoveQuantity()));
+                moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x + 1, y));
             }
-            else if (x > FocusPosition.X && x > 0)
+            if (x > FocusPosition.X && x > 0)
             {
-                intentionLayer[x - 1, y].AddMoveIntention(new MoveIntention(myPosition, SheepMoveQuantity()));
+                moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x - 1, y));
             }
-            else if (y < FocusPosition.Y && y < Simulation.WorldSize - 1)
+            if (y < FocusPosition.Y && y < Simulation.WorldSize - 1)
             {
-                intentionLayer[x, y + 1].AddMoveIntention(new MoveIntention(myPosition, SheepMoveQuantity()));
+                moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x, y + 1));
             }
-            else if (y > FocusPosition.Y && y > 0)
+            if (y > FocusPosition.Y && y > 0)
             {
-                intentionLayer[x, y - 1].AddMoveIntention(new MoveIntention(myPosition, SheepMoveQuantity()));
+                moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x, y - 1));
             }
         }
         else
@@ -105,21 +105,31 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
             // Move away from target position
             if (x < FocusPosition.X && x > 0)
             {
-                intentionLayer[x - 1, y].AddMoveIntention(new MoveIntention(myPosition, Quantity));
+                moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x - 1, y));
             }
-            else if (x > FocusPosition.X && x < Simulation.WorldSize - 1)
+            if (x > FocusPosition.X && x < Simulation.WorldSize - 1)
             {
-                intentionLayer[x + 1, y].AddMoveIntention(new MoveIntention(myPosition, Quantity));
+                moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x + 1, y));
             }
-            else if (y < FocusPosition.Y && y > 0)
+            if (y < FocusPosition.Y && y > 0)
             {
-                intentionLayer[x, y - 1].AddMoveIntention(new MoveIntention(myPosition, Quantity));
+                moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x, y - 1));
             }
-            else if (y > FocusPosition.Y && y < Simulation.WorldSize - 1)
+            if (y > FocusPosition.Y && y < Simulation.WorldSize - 1)
             {
-                intentionLayer[x, y + 1].AddMoveIntention(new MoveIntention(myPosition, Quantity));
+                moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x, y + 1));
             }
         }
+
+        if (moveIntentions.Count == 0) return;
+
+        int moveIntentionIndex = Simulation.RandomIntBetween(0, moveIntentions.Count);
+        
+        (MoveIntention move, int destX, int destY) = moveIntentions[moveIntentionIndex];
+        
+        intentionLayer[destX, destY].AddMoveIntention(move);
+        
+        GD.Print("Moving");
     }
 
     private int SheepMoveQuantity()

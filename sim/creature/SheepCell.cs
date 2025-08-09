@@ -4,7 +4,7 @@ using NewGameProject.sim.terrain;
 
 namespace NewGameProject.sim.creature;
 
-public class SheepCell(int quantity) : CreatureCell(CreatureCellType.Sheep, quantity, 10, 2)
+public class SheepCell(int quantity) : CreatureCell(CreatureCellType.Sheep, quantity, 10, 1)
 {
     protected override int ComputeTileAttractiveness(TerrainType terrainType, PlantCell plantCell, CreatureCell creatureCell)
     {
