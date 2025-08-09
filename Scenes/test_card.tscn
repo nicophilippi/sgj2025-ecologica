@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://qblwltx7khel"]
+
+[ext_resource type="Script" uid="uid://bbw3kitvdyibx" path="res://Code/Cards/Card.cs" id="1_xvk5x"]
+[ext_resource type="Texture2D" uid="uid://fgubqipb62qk" path="res://icon.svg" id="2_frajv"]
+
+[node name="TestCard" type="Node2D"]
+script = ExtResource("1_xvk5x")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_frajv")

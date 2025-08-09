@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://ctrrltfx10hy5"]
+[gd_scene load_steps=3 format=3 uid="uid://ctrrltfx10hy5"]
 
-[ext_resource type="Script" uid="uid://d07pbqyktrtq7" path="res://Root.cs" id="1_pq8q7"]
+[ext_resource type="Script" uid="uid://c5gjwx6t40ret" path="res://Root.cs" id="1_pq8q7"]
+[ext_resource type="PackedScene" uid="uid://cfu50yb8q35q4" path="res://Scenes/card_manager.tscn" id="2_pyidc"]
 
 [node name="Root" type="Node"]
 script = ExtResource("1_pq8q7")
+
+[node name="CardManager" parent="." instance=ExtResource("2_pyidc")]
