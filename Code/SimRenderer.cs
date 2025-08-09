@@ -1,7 +1,7 @@
 using Godot;
 using Microsoft.VisualBasic;
 
-public partial class SimRenderer : Node
+public partial class SimRenderer : Node2D
 {
     [Export] private Texture2D _tex;
     private Sprite2D[,] _sprites;
@@ -40,6 +40,14 @@ public partial class SimRenderer : Node
             var sprite = _sprites[x, y];
             var data = LoseReferences.GetTile(x, y);
             DrawCell(sprite, data);
+            if (x == 0 && y == 0)
+            {
+                sprite.Modulate = Colors.Red;
+            }
+            else if(x == 0 && y = 1)
+            {
+                sprite.Modulate = Colors.Green;
+            }
         }
     }
 
