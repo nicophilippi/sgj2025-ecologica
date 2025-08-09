@@ -16,6 +16,7 @@ public partial class SimRenderer : Node2D
     [Export] private Texture2D _barren; 
     [Export] private Texture2D[] _grass;
     [Export] private Texture2D[] _sheep;
+    [Export] private Texture2D[] _wolf;
     private RenderedCell[,] _sprites;
 
 
@@ -87,7 +88,12 @@ public partial class SimRenderer : Node2D
         }
         else
         {
-            rendCell.Animal.Texture = null;
+            if (creature != null && creature.Type == CreatureCellType.Wolf)
+            {
+                var quant = Mathf.Min(creature.Quantity, creature.MaxQuantity);
+                var i = Mathf.FloorToInt(quant / (float)(creature.MaxQuantity + 1) * 4f);
+                rendCell.Animal.Texture = _wolf[i];
+            }
         }
     }
 }

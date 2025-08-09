@@ -1,4 +1,5 @@
 ﻿using System;
+using Godot;
 using NewGameProject.sim.creature;
 using NewGameProject.sim.intention.cell;
 using NewGameProject.sim.plant;
@@ -10,6 +11,8 @@ namespace NewGameProject.sim;
 public static class Simulation
 {
     public const int WorldSize = 70;
+
+    public static int TickCount = 0; 
     
     private static readonly TerrainType[,] TerraLayer = new TerrainType[WorldSize, WorldSize];
     private static readonly PlantCell[,] FloraLayer = new PlantCell[WorldSize, WorldSize];
@@ -65,9 +68,22 @@ public static class Simulation
         
         ForEachWorldPosition((x, y) => FaunaLayer[x, y]?.ComputeProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
         ForEachWorldPosition((x, y) => ProcreateIntentionLayer[x, y].DeconflictProcreateIntentions(x, y, SimulationLayer.Fauna, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
+        count_entities();
+        TickCount++;
     }
     
-    
+    public static void count_entities()
+    {
+        int num_plants = 0;
+        int num_animals = 0;
+        ForEachWorldPosition((x, y) =>
+        {
+            num_plants += FloraLayer[x, y] == null ? 0 : FloraLayer[x, y].Health;
+            num_animals += FaunaLayer[x, y] == null ? 0 : FaunaLayer[x, y].Quantity;
+        });
+
+        GD.Print($"Tick: {TickCount}: Plants: {num_plants}, Animals: {num_animals}");
+    }
     
     public static TerrainType GetTerrainCell(SimulationPosition i) => TerraLayer[i.X, i.Y];
     
