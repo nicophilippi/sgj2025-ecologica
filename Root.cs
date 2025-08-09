@@ -1,8 +1,18 @@
 using Godot;
-using System;
 
 public partial class Root : Node
 {
+    public static Root Instance;
+    [field: Export] public Vector2 GridSize { get; private set; } = new(128f, 128f);
+    
+    
+    public Vector2I GlobalToIndex(Vector2 global)
+    {
+        global /= GridSize;
+        return new Vector2I(Mathf.RoundToInt(global.X), Mathf.RoundToInt(global.Y));
+    }
+    
+    
     private SimTimer timer;
     public override void _EnterTree()
     {
@@ -10,6 +20,7 @@ public partial class Root : Node
         timer = new SimTimer();
         AddChild(timer);
         timer.ChangeTimer();
+        Instance = this;
     }
 
     public override void _Process(double delta)

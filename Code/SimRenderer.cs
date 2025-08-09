@@ -11,11 +11,10 @@ public partial class SimRenderer : Node2D
     {
         public Sprite2D Sprite;
     }
-    
-    [Export] private Vector2 _cellSize = new(64f, 64f);
+
+
     [Export] private Texture2D _barren; 
     [Export] private Texture2D[] _grass;
-    
     private RenderedCell[,] _sprites;
 
 
@@ -31,7 +30,7 @@ public partial class SimRenderer : Node2D
         for (var x = 0; x < Simulation.WorldSize; x++)
         for (var y = 0; y < Simulation.WorldSize; y++)
         {
-            _sprites[x, y] = InitCell(new Vector2(x, y) * _cellSize);
+            _sprites[x, y] = InitCell(new Vector2(x, y) * Root.Instance.GridSize);
         }
     }
 

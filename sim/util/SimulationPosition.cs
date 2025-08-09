@@ -1,4 +1,5 @@
 ﻿using System;
+using Godot;
 
 namespace NewGameProject.sim.util;
 
@@ -33,4 +34,7 @@ public readonly struct SimulationPosition(int x, int y)
         if (Y < Simulation.WorldSize - 1)
             predicate(Offset(SimulationDirection.Down));
     }
+
+
+    public static implicit operator SimulationPosition(Vector2I i) => new(i.X, i.Y);
 }
