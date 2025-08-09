@@ -18,6 +18,7 @@ public partial class SimRenderer : Node
             var sprite = new Sprite2D();
             AddChild(sprite);
             sprite.Position = new Vector2(x, y) * _tex.GetSize();
+            sprite.Texture = _tex;
             _sprites[x, y] = sprite;
         }
     }
@@ -32,10 +33,18 @@ public partial class SimRenderer : Node
         var visibleIndices = new Rect2I((Vector2I) (visibleRect.Position / _tex.GetSize()),
             (Vector2I) (visibleRect.Size / _tex.GetSize()) + Vector2I.One);
         
-        for (var x = Mathf.Max(visibleIndices.Position.X, 0); x <= Mathf.Min(visibleIndices.End.X, _sprites.GetLength(0)); x++)
-        for (var y = Mathf.Max(visibleIndices.Position.Y, 0); y <= Mathf.Min(visibleIndices.End.Y, _sprites.GetLength(1)); y++)
+        for (var x = Mathf.Max(visibleIndices.Position.X, 0); x <= Mathf.Min(visibleIndices.End.X, _sprites.GetLength(0) - 1); x++)
+        for (var y = Mathf.Max(visibleIndices.Position.Y, 0); y <= Mathf.Min(visibleIndices.End.Y, _sprites.GetLength(1) - 1); y++)
         {
-            // TODO: Update Cell!
+            var sprite = _sprites[x, y];
+            var data = LoseReferences.GetTile(x, y);
+            DrawCell(sprite, data);
         }
+    }
+
+
+    private void DrawCell(Sprite2D sprite, LoseReferences.WhateverTheFuckTileDataLooksLike tileData)
+    {
+        sprite.Modulate = Colors.Green;
     }
 }
