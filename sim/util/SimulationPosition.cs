@@ -20,6 +20,9 @@ public readonly struct SimulationPosition(int x, int y)
         };
     }
 
+    /// <summary>
+    /// Iterates over all direct neighbours until predicate returns true
+    /// </summary>
     public void ForEachDirectionBreaking(Predicate<SimulationPosition> predicate)
     {
         if (Y > 0)
