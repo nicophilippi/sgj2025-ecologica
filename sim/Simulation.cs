@@ -49,6 +49,7 @@ public static class Simulation
         }
 
         FloraLayer[35, 35] = new GrassCell();
+        FaunaLayer[35, 36] = new SheepCell(1);
     }
 
     public static void OnTick()
@@ -59,21 +60,17 @@ public static class Simulation
         ForEachWorldPosition((x, y) => FaunaLayer[x, y].ComputeMoveIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
         ForEachWorldPosition((x, y) => MoveIntentionLayer[x, y].DeconflictMoveIntentions(x, y, SimulationLayer.Fauna, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
         
-        
-        
         ForEachWorldPosition((x, y) => FloraLayer[x, y].ComputeEatIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
         ForEachWorldPosition((x, y) => EatIntentionLayer[x, y].DeconflictEatIntentions(x, y, SimulationLayer.Flora, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
         
-        ForEachWorldPosition((x, y) => FaunaLayer[x, y].ComputeEatIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
-        ForEachWorldPosition((x, y) => EatIntentionLayer[x, y].DeconflictEatIntentions(x, y, SimulationLayer.Fauna, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
-        
-        
+        //ForEachWorldPosition((x, y) => FaunaLayer[x, y].ComputeEatIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
+        //ForEachWorldPosition((x, y) => EatIntentionLayer[x, y].DeconflictEatIntentions(x, y, SimulationLayer.Fauna, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
         
         ForEachWorldPosition((x, y) => FloraLayer[x, y].ComputeProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
         ForEachWorldPosition((x, y) => ProcreateIntentionLayer[x, y].DeconflictProcreateIntentions(x, y, SimulationLayer.Flora, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
         
-        ForEachWorldPosition((x, y) => FaunaLayer[x, y].ComputeProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
-        ForEachWorldPosition((x, y) => ProcreateIntentionLayer[x, y].DeconflictProcreateIntentions(x, y, SimulationLayer.Fauna, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
+        //ForEachWorldPosition((x, y) => FaunaLayer[x, y].ComputeProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
+        //ForEachWorldPosition((x, y) => ProcreateIntentionLayer[x, y].DeconflictProcreateIntentions(x, y, SimulationLayer.Fauna, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
     }
     
     

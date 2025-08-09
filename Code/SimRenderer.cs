@@ -9,12 +9,13 @@ public partial class SimRenderer : Node2D
 {
     private struct RenderedCell
     {
-        public Sprite2D Sprite;
+        public Sprite2D Ground;
+        public Sprite2D Animal;
     }
-
-
+    
     [Export] private Texture2D _barren; 
     [Export] private Texture2D[] _grass;
+    [Export] private Texture2D[] _sheep;
     private RenderedCell[,] _sprites;
 
 
@@ -56,9 +57,12 @@ public partial class SimRenderer : Node2D
     {
         var o = new RenderedCell();
 
-        o.Sprite = new Sprite2D();
-        AddChild(o.Sprite); // IMPORTANT!
-        o.Sprite.Position = at;
+        o.Ground = new Sprite2D();
+        o.Animal = new Sprite2D();
+        AddChild(o.Ground); // IMPORTANT!
+        AddChild(o.Animal);
+        o.Ground.Position = at;
+        o.Animal.Position = at;
         return o;
     }
 
@@ -68,12 +72,23 @@ public partial class SimRenderer : Node2D
         // Plants
         if (plant == null || plant.Type == PlantCellType.Barren)
         {
-            rendCell.Sprite.Texture = _barren;
+            rendCell.Ground.Texture = _barren;
         }
         else if (plant.Type == PlantCellType.Grass)
         {
             var i = Mathf.FloorToInt(plant.Health / (float)(plant.MaxHealth + 1) * 4f);
-            rendCell.Sprite.Texture = _grass[i];
+            rendCell.Ground.Texture = _grass[i];
         } 
+        
+        // Animals
+        if (creature != null && creature.Type == CreatureCellType.Sheep)
+        {
+            var i = Mathf.FloorToInt(creature.Quantity / (float)(creature.MaxQuantity + 1) * 4f);
+            rendCell.Animal.Texture = _sheep[i];
+        }
+        else
+        {
+            rendCell.Animal.Texture = null;
+        }
     }
 }

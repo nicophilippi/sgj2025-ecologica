@@ -48,6 +48,8 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
                 if (currX == x && currY == y) continue;
                 
                 if (currX is < 0 or >= Simulation.WorldSize || currY is < 0 or >= Simulation.WorldSize) continue;
+
+                if (faunaLayer[currX, currY] != null && faunaLayer[currX, currY].Type != CreatureCellType.Empty) continue;
                 
                 int currAttractiveness = ComputeTileAttractiveness(terraLayer[currX, currY], floraLayer[currX, currY], faunaLayer[currX, currY]);
 
