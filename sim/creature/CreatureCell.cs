@@ -7,11 +7,12 @@ using NewGameProject.sim.util;
 
 namespace NewGameProject.sim.creature;
 
-public abstract class CreatureCell(CreatureCellType type, int quantity, int visionRange) : Cell
+public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQuantity, int visionRange) : Cell
 {
     public CreatureCellType Type { get; } = type;
     
     public int Quantity { get; set; } = quantity;
+    public int MaxQuantity { get; } = maxQuantity;
     public int Hunger { get; set; } = 0;
     public int VisionRange { get; } = visionRange;
     
@@ -28,7 +29,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int visi
     )
     {
         // If there's no creature, we can't do anything :(
-        if (type == CreatureCellType.Empty) return;
+        if (Type == CreatureCellType.Empty) return;
         
         SimulationPosition
             myPosition = new(x, y),
@@ -82,41 +83,41 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int visi
         if (FocusAttractiveness > 0)
         {
             // Move towards focus position
-            if (x < FocusPosition.X)
+            if (x < FocusPosition.X && x < Simulation.WorldSize - 1)
             {
-                intentionLayer[x + 1, y].AddMoveIntention(new MoveIntention(myPosition, 1));
+                intentionLayer[x + 1, y].AddMoveIntention(new MoveIntention(myPosition, Quantity));
             }
-            else if (x > FocusPosition.X)
+            else if (x > FocusPosition.X && x > 0)
             {
-                intentionLayer[x - 1, y].AddMoveIntention(new MoveIntention(myPosition, 1));
+                intentionLayer[x - 1, y].AddMoveIntention(new MoveIntention(myPosition, Quantity));
             }
-            else if (y < FocusPosition.Y)
+            else if (y < FocusPosition.Y && y < Simulation.WorldSize - 1)
             {
-                intentionLayer[x, y + 1].AddMoveIntention(new MoveIntention(myPosition, 1));
+                intentionLayer[x, y + 1].AddMoveIntention(new MoveIntention(myPosition, Quantity));
             }
-            else if (y > FocusPosition.Y)
+            else if (y > FocusPosition.Y && y > 0)
             {
-                intentionLayer[x, y - 1].AddMoveIntention(new MoveIntention(myPosition, 1));
+                intentionLayer[x, y - 1].AddMoveIntention(new MoveIntention(myPosition, Quantity));
             }
         }
         else
         {
             // Move away from target position
-            if (x < FocusPosition.X)
+            if (x < FocusPosition.X && x > 0)
             {
-                intentionLayer[x - 1, y].AddMoveIntention(new MoveIntention(myPosition, 1));
+                intentionLayer[x - 1, y].AddMoveIntention(new MoveIntention(myPosition, Quantity));
             }
-            else if (x > FocusPosition.X)
+            else if (x > FocusPosition.X && x < Simulation.WorldSize - 1)
             {
-                intentionLayer[x + 1, y].AddMoveIntention(new MoveIntention(myPosition, 1));
+                intentionLayer[x + 1, y].AddMoveIntention(new MoveIntention(myPosition, Quantity));
             }
-            else if (y < FocusPosition.Y)
+            else if (y < FocusPosition.Y && y > 0)
             {
-                intentionLayer[x, y - 1].AddMoveIntention(new MoveIntention(myPosition, 1));
+                intentionLayer[x, y - 1].AddMoveIntention(new MoveIntention(myPosition, Quantity));
             }
-            else if (y > FocusPosition.Y)
+            else if (y > FocusPosition.Y && y < Simulation.WorldSize - 1)
             {
-                intentionLayer[x, y + 1].AddMoveIntention(new MoveIntention(myPosition, 1));
+                intentionLayer[x, y + 1].AddMoveIntention(new MoveIntention(myPosition, Quantity));
             }
         }
     }
@@ -130,7 +131,16 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int visi
         EatIntentionCell[,] intentionLayer
     )
     {
-        // Not yet implemented...
+        PlantCell plantCell = floraLayer[x, y];
+
+        if (plantCell.Type == PlantCellType.Grass)
+        {
+            
+        }
+        else
+        {
+            
+        }
     }
 
     public override void ComputeProcreateIntentions(

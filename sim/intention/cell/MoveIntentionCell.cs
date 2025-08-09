@@ -22,10 +22,6 @@ public struct MoveIntentionCell()
         MoveIntentionCell[,] intentionLayer
     )
     {
-        if (Intentions == null)
-        {
-            GD.Print("WTF");
-        }
         // No intentions to deconflict
         if (Intentions.Count == 0)
         {
