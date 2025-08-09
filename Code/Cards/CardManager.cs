@@ -87,6 +87,8 @@ public partial class CardManager : Node2D
     private Card NewCard()
     {
         if (_allCards.Length == 0) GD.PrintErr("NO CARDS!?\n" + Utils.NoBitches);
-        return _allCards[GD.RandRange(0, _allCards.Length - 1)].Instantiate<Card>();
+        var result = _allCards[GD.RandRange(0, _allCards.Length - 1)].Instantiate<Card>();
+        AddChild(result);
+        return result;
     }
 }
