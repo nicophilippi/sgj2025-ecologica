@@ -1,5 +1,6 @@
-using System;
 using Godot;
+using NewGameProject.sim;
+using NewGameProject.sim.creature;
 
 public partial class WolfCard : SetCard
 {
@@ -8,6 +9,6 @@ public partial class WolfCard : SetCard
 
     public override void Set(Vector2I where)
     {
-        throw new NotImplementedException();
+        Simulation.SetCreatureCell(where, new WolfCell(HowMany));
     }
 }
