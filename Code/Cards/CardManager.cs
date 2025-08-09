@@ -67,6 +67,7 @@ public partial class CardManager : Node2D
             GD.Print("Selected: " + _selected.Name);
             _selected = null;
             GD.Print("Cards[SelectedIndex]: " + _cards[_selectedIndex].Name);
+            GD.Print("Selected Type: " + _cards[_selectedIndex].GetType().Name);
             _cards[_selectedIndex] = NewCard();
         }
         if (Input.IsMouseButtonPressed(MouseButton.Right)) _selected = null;
