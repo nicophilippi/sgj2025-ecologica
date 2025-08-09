@@ -13,24 +13,9 @@ public partial class Root : Node
     }
     
     
-    private SimTimer timer;
     public override void _EnterTree()
     {
         base._EnterTree();
-        timer = new SimTimer();
-        AddChild(timer);
-        timer.ChangeTimer();
         Instance = this;
-    }
-
-    public override void _Process(double delta)
-    {
-        base._Process(delta);
-
-        if (Input.IsActionJustPressed("pause"))
-        {
-            GD.Print("Paused");
-            timer.ChangeTimer();
-        }
     }
 }
