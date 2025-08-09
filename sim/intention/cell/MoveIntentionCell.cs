@@ -82,6 +82,7 @@ public struct MoveIntentionCell()
         faunaLayer[x, y] = winnerCreatureCell.Type switch
         {
             CreatureCellType.Sheep => new SheepCell(winnerIntention.Quantity),
+            CreatureCellType.Wolf => new WolfCell(winnerIntention.Quantity),
             _ => throw new Exception("SHOULDNOTHAPPEN")
         };
             
