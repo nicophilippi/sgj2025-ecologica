@@ -83,6 +83,8 @@ public struct ProcreateIntentionCell()
                     PlantCellType.Barren => new BarrenCell(),
                     _ => throw new ArgumentOutOfRangeException("")
                 };
+                
+                Intentions.Clear();
                 break;
             case SimulationLayer.Fauna:
                 CreatureCell winnerCreatureCell = faunaLayer[winnerIntention.FromPosition.X, winnerIntention.FromPosition.Y];
@@ -93,6 +95,8 @@ public struct ProcreateIntentionCell()
                     CreatureCellType.Empty => new EmptyCell(),
                     _ => throw new ArgumentOutOfRangeException("")
                 };
+                
+                Intentions.Clear();
                 break;
             default:
                 throw new Exception("");
