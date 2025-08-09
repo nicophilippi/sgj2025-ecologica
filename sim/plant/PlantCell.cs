@@ -9,8 +9,8 @@ namespace NewGameProject.sim.plant;
 public abstract class PlantCell(PlantCellType type, int maxHealth) : Cell
 {
     public PlantCellType Type { get; } = type;
-    protected int Health { get; set; } = 1;
-    protected int MaxHealth { get; } = maxHealth;
+    public int Health { get; set; } = 1;
+    public int MaxHealth { get; } = maxHealth;
 
     public sealed override void ComputeMoveIntentions(
         int x,
@@ -69,7 +69,6 @@ public abstract class PlantCell(PlantCellType type, int maxHealth) : Cell
             if (!IsHabitable(neighborCell)) return false;
             
             intentionLayer[neighborPosition.X, neighborPosition.Y].AddProcreateIntention(new ProcreateIntention(
-                SimulationLayer.Flora,
                 currPosition,
                 1
             ));

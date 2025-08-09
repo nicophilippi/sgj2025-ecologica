@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Godot;
 
@@ -13,6 +14,7 @@ public partial class CardManager : Node2D
     private Card[] _cards;
     private Vector2[] _targetScales;
     private Card _selected;
+    private int _selectedIndex;
     private int _tier;
 
 
@@ -52,8 +54,21 @@ public partial class CardManager : Node2D
 
         #region _selectedUpdates
 
-        if (minI != -1 && Input.IsMouseButtonPressed(MouseButton.Left)) _selected = _cards[minI];
-        if (minI == -1 && Input.IsMouseButtonPressed(MouseButton.Left)) _selected = null;
+        if (minI != -1 && Input.IsActionJustPressed("select card"))
+        {
+            _selected = _cards[minI];
+            _selectedIndex = minI;
+        }
+
+        if (_selected != null && minI == -1 && Input.IsActionJustPressed("select card"))
+        {
+            _selected.Play();
+            _selected.QueueFree();
+            GD.Print("Selected: " + _selected.Name);
+            _selected = null;
+            GD.Print("Cards[SelectedIndex]: " + _cards[_selectedIndex].Name);
+            _cards[_selectedIndex] = NewCard();
+        }
         if (Input.IsMouseButtonPressed(MouseButton.Right)) _selected = null;
 
         #endregion
@@ -66,5 +81,14 @@ public partial class CardManager : Node2D
         
         // _selected Upscale
         if (_selected != null) _selected.GlobalScale = _selected.GlobalScale.MoveToward(Vector2.One, ScaleFix * (float) delta);
+    }
+
+
+    private Card NewCard()
+    {
+        if (_allCards.Length == 0) GD.PrintErr("NO CARDS!?\n" + Utils.NoBitches);
+        var result = _allCards[GD.RandRange(0, _allCards.Length - 1)].Instantiate<Card>();
+        AddChild(result);
+        return result;
     }
 }

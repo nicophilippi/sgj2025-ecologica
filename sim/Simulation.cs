@@ -1,7 +1,5 @@
 ﻿using System;
-using Godot;
 using NewGameProject.sim.creature;
-using NewGameProject.sim.intention;
 using NewGameProject.sim.intention.cell;
 using NewGameProject.sim.plant;
 using NewGameProject.sim.terrain;
@@ -36,32 +34,42 @@ public static class Simulation
 
     public static void OnInit()
     {
-        
+        for (int x = 0; x < WorldSize; ++x)
+        {
+            for (int y = 0; y < WorldSize; ++y)
+            {
+                TerraLayer[x, y] = TerrainType.Plains;
+                FloraLayer[x, y] = new BarrenCell();
+                FaunaLayer[x, y] = new EmptyCell();
+            }
+        }
+
+        FloraLayer[2, 2] = new GrassCell();
     }
 
     public static void OnTick()
     {
         ForEachWorldPosition((x, y) => FloraLayer[x, y].ComputeMoveIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
-        ForEachWorldPosition((x, y) => MoveIntentionLayer[x, y].DeconflictMoveIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
+        ForEachWorldPosition((x, y) => MoveIntentionLayer[x, y].DeconflictMoveIntentions(x, y, SimulationLayer.Flora, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
         
         ForEachWorldPosition((x, y) => FaunaLayer[x, y].ComputeMoveIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
-        ForEachWorldPosition((x, y) => MoveIntentionLayer[x, y].DeconflictMoveIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
+        ForEachWorldPosition((x, y) => MoveIntentionLayer[x, y].DeconflictMoveIntentions(x, y, SimulationLayer.Fauna, TerraLayer, FloraLayer, FaunaLayer, MoveIntentionLayer));
         
         
         
         ForEachWorldPosition((x, y) => FloraLayer[x, y].ComputeEatIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
-        ForEachWorldPosition((x, y) => EatIntentionLayer[x, y].DeconflictEatIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
+        ForEachWorldPosition((x, y) => EatIntentionLayer[x, y].DeconflictEatIntentions(x, y, SimulationLayer.Flora, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
         
         ForEachWorldPosition((x, y) => FaunaLayer[x, y].ComputeEatIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
-        ForEachWorldPosition((x, y) => EatIntentionLayer[x, y].DeconflictEatIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
+        ForEachWorldPosition((x, y) => EatIntentionLayer[x, y].DeconflictEatIntentions(x, y, SimulationLayer.Fauna, TerraLayer, FloraLayer, FaunaLayer, EatIntentionLayer));
         
         
         
         ForEachWorldPosition((x, y) => FloraLayer[x, y].ComputeProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
-        ForEachWorldPosition((x, y) => ProcreateIntentionLayer[x, y].DeconflictProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
+        ForEachWorldPosition((x, y) => ProcreateIntentionLayer[x, y].DeconflictProcreateIntentions(x, y, SimulationLayer.Flora, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
         
         ForEachWorldPosition((x, y) => FaunaLayer[x, y].ComputeProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
-        ForEachWorldPosition((x, y) => ProcreateIntentionLayer[x, y].DeconflictProcreateIntentions(x, y, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
+        ForEachWorldPosition((x, y) => ProcreateIntentionLayer[x, y].DeconflictProcreateIntentions(x, y, SimulationLayer.Fauna, TerraLayer, FloraLayer, FaunaLayer, ProcreateIntentionLayer));
     }
     
     
@@ -83,4 +91,14 @@ public static class Simulation
 
 
     public static int RandomIntBetween(int min, int max) => Random.Next(min, max);
+
+
+
+    public static void Main()
+    {
+        OnInit();
+
+        int i = 0;
+        while (i++ < 100) OnTick();
+    }
 }

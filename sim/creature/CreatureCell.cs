@@ -7,12 +7,12 @@ using NewGameProject.sim.util;
 
 namespace NewGameProject.sim.creature;
 
-public abstract class CreatureCell(CreatureCellType type, int quantity, int hunger, int visionRange) : Cell
+public abstract class CreatureCell(CreatureCellType type, int quantity, int visionRange) : Cell
 {
     public CreatureCellType Type { get; } = type;
     
     public int Quantity { get; set; } = quantity;
-    public int Hunger { get; set; } = hunger;
+    public int Hunger { get; set; } = 0;
     public int VisionRange { get; } = visionRange;
     
     public SimulationPosition FocusPosition;
