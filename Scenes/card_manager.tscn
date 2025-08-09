@@ -1,13 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfu50yb8q35q4"]
+[gd_scene load_steps=4 format=3 uid="uid://cfu50yb8q35q4"]
 
 [ext_resource type="Script" uid="uid://dwmtfpumvqkvi" path="res://Code/Cards/CardManager.cs" id="1_pikqg"]
-[ext_resource type="PackedScene" uid="uid://qblwltx7khel" path="res://Scenes/test_card.tscn" id="2_7ykl4"]
+[ext_resource type="PackedScene" uid="uid://nb77vexidqmv" path="res://Scenes/point_grass_card.tscn" id="2_8klf7"]
+[ext_resource type="PackedScene" uid="uid://bnbqkqjxyosp5" path="res://Scenes/sheep_card.tscn" id="3_w6ora"]
 
 [node name="CardManager" type="Node2D" node_paths=PackedStringArray("_cardPivots")]
 script = ExtResource("1_pikqg")
 _cardPivots = [NodePath("CardPivot1"), NodePath("CardPivot2"), NodePath("CardPivot3"), NodePath("CardPivot4"), NodePath("CardPivot5")]
-_startCards = Array[PackedScene]([ExtResource("2_7ykl4"), ExtResource("2_7ykl4"), ExtResource("2_7ykl4"), ExtResource("2_7ykl4"), ExtResource("2_7ykl4")])
-_allCards = Array[PackedScene]([ExtResource("2_7ykl4")])
+_startCards = Array[PackedScene]([ExtResource("2_8klf7"), ExtResource("2_8klf7"), ExtResource("2_8klf7"), ExtResource("3_w6ora"), ExtResource("3_w6ora")])
+_allCards = Array[PackedScene]([ExtResource("2_8klf7"), ExtResource("3_w6ora")])
 ScaleFix = 10.0
 
 [node name="CardPivot1" type="Node2D" parent="."]

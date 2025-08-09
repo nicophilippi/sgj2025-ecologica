@@ -23,7 +23,9 @@ _grass = Array[Texture2D]([ExtResource("4_tw3kd"), ExtResource("5_gd4vy"), ExtRe
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(574, 327)
 script = ExtResource("5_jnlp7")
-_zoomSpeed = Vector2(0.04, 0.04)
+_zoomSpeed = Vector2(0.055, 0.055)
+_zoomMin = 0.3
+_zoomMax = 1.0
 
 [node name="CanvasLayer" parent="." instance=ExtResource("5_l8v81")]
 

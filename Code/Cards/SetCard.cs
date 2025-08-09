@@ -11,7 +11,7 @@ public abstract partial class SetCard : Card
     public override void Play()
     {
         base.Play();
-        var mousePos = GetGlobalMousePosition();
+        var mousePos = Camera2d.Instance.GetGlobalMousePosition();
         var mouseIndex = Root.Instance.GlobalToIndex(mousePos);
 
         for (var x = mouseIndex.X - AddRadius; x <= mouseIndex.X + AddRadius; x++)
