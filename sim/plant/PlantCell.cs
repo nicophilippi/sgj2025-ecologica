@@ -33,7 +33,7 @@ public abstract class PlantCell(PlantCellType type, int maxHealth) : Cell
         EatIntentionCell[,] intentionLayer
     )
     {
-        // Grass do not eat anything...
+        // Plants do not eat anything...
     }
 
     public sealed override void ComputeProcreateIntentions(
@@ -66,7 +66,7 @@ public abstract class PlantCell(PlantCellType type, int maxHealth) : Cell
         {
             var neighborCell = terraLayer[neighborPosition.X, neighborPosition.Y];
 
-            if (!IsHabitable(neighborCell)) return false;
+            if (!IsHabitable(neighborCell) || floraLayer[neighborPosition.X, neighborPosition.Y].Type != PlantCellType.Barren) return false;
             
             intentionLayer[neighborPosition.X, neighborPosition.Y].AddProcreateIntention(new ProcreateIntention(
                 currPosition,
