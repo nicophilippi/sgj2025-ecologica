@@ -15,11 +15,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
     
     public int Quantity { get; set; } = quantity;
     public int MaxQuantity { get; } = maxQuantity;
-    public int Hunger { get; set; } = 0;
     public int VisionRange { get; } = visionRange;
-    
-    public SimulationPosition FocusPosition = new(0, 0);
-    public int FocusAttractiveness = 0;
     
     public override void ComputeMoveIntentions(
         int x,
@@ -36,9 +32,10 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
             worstPosition = myPosition;
 
         int
-            bestAttractiveness = 0,
-            worstAttractiveness = 0;
+            bestAttractiveness = int.MinValue,
+            worstAttractiveness = int.MaxValue;
 
+        // Randomly flip the x and y iteration order
         int
             xFlip = Simulation.RandomIntBetween(0, 100) < 50 ? -1 : 1,
             yFlip = Simulation.RandomIntBetween(0, 100) < 50 ? -1 : 1;
@@ -48,12 +45,16 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
         {
             for (int currY = y - VisionRange*yFlip; yFlip == 1 ? currY <= y + VisionRange : currY >= y - VisionRange; currY += yFlip)
             {
+                // Don't include the current position in evaluation
                 if (currX == x && currY == y) continue;
+                
+                // Don't evaluate positions out of world range
                 if (currX is < 0 or >= Simulation.WorldSize || currY is < 0 or >= Simulation.WorldSize) continue;
-                if (faunaLayer[currX, currY] != null && faunaLayer[currX, currY] != null) continue;
+                
+                // Don't evaluate positions where there is already a creature cell
+                if (faunaLayer[currX, currY] != null) continue;
 
-                var currAttractiveness = ComputeTileAttractiveness(new SimulationPosition(currX, currY),
-                    terraLayer, floraLayer, faunaLayer);
+                var currAttractiveness = ComputeTileAttractiveness(new SimulationPosition(currX, currY), terraLayer, floraLayer, faunaLayer);
 
                 if (currAttractiveness > bestAttractiveness)
                 {
@@ -72,56 +73,45 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
         // Adjust focus position according to intensity
         int bestAttractivenessIntensity = int.Abs(bestAttractiveness);
         int worstAttractivenessIntensity = int.Abs(worstAttractiveness);
-        
-        if (bestAttractivenessIntensity > int.Abs(FocusAttractiveness))
-        {
-            FocusPosition = bestPosition;
-            FocusAttractiveness = bestAttractiveness;
-        }
-        if (worstAttractivenessIntensity > int.Abs(FocusAttractiveness))
-        {
-            FocusPosition = worstPosition;
-            FocusAttractiveness = worstAttractiveness;
-        }
 
-        List<(MoveIntention move, int destX, int destY)> moveIntentions = new();
+        List<(MoveIntention move, int destX, int destY)> moveIntentions = [];
         
-        if (FocusAttractiveness > 0)
+        if (bestAttractivenessIntensity > worstAttractivenessIntensity)
         {
-            // Move towards focus position
-            if (x < FocusPosition.X && x < Simulation.WorldSize - 1)
+            // Move towards best position
+            if (x < bestPosition.X && x < Simulation.WorldSize - 1)
             {
                 moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x + 1, y));
             }
-            if (x > FocusPosition.X && x > 0)
+            if (x > bestPosition.X && x > 0)
             {
                 moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x - 1, y));
             }
-            if (y < FocusPosition.Y && y < Simulation.WorldSize - 1)
+            if (y < bestPosition.Y && y < Simulation.WorldSize - 1)
             {
                 moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x, y + 1));
             }
-            if (y > FocusPosition.Y && y > 0)
+            if (y > bestPosition.Y && y > 0)
             {
                 moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x, y - 1));
             }
         }
         else
         {
-            // Move away from target position
-            if (x < FocusPosition.X && x > 0)
+            // Move away from worst position
+            if (x < worstPosition.X && x > 0)
             {
                 moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x - 1, y));
             }
-            if (x > FocusPosition.X && x < Simulation.WorldSize - 1)
+            if (x > worstPosition.X && x < Simulation.WorldSize - 1)
             {
                 moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x + 1, y));
             }
-            if (y < FocusPosition.Y && y > 0)
+            if (y < worstPosition.Y && y > 0)
             {
                 moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x, y - 1));
             }
-            if (y > FocusPosition.Y && y < Simulation.WorldSize - 1)
+            if (y > worstPosition.Y && y < Simulation.WorldSize - 1)
             {
                 moveIntentions.Add((new MoveIntention(myPosition, SheepMoveQuantity()), x, y + 1));
             }
@@ -129,9 +119,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
 
         if (moveIntentions.Count == 0) return;
 
-        int moveIntentionIndex = Simulation.RandomIntBetween(0, moveIntentions.Count);
-        
-        (MoveIntention move, int destX, int destY) = moveIntentions[moveIntentionIndex];
+        var (move, destX, destY) = moveIntentions[Simulation.RandomIntBetween(0, moveIntentions.Count)];
         
         intentionLayer[destX, destY].AddMoveIntention(move);
     }
