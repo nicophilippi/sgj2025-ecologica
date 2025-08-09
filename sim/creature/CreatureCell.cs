@@ -46,8 +46,9 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
                 if (currX == x && currY == y) continue;
                 if (currX is < 0 or >= Simulation.WorldSize || currY is < 0 or >= Simulation.WorldSize) continue;
                 if (faunaLayer[currX, currY] != null && faunaLayer[currX, currY] != null) continue;
-                
-                int currAttractiveness = ComputeTileAttractiveness(terraLayer[currX, currY], floraLayer[currX, currY], faunaLayer[currX, currY]);
+
+                var currAttractiveness = ComputeTileAttractiveness(new SimulationPosition(currX, currY),
+                    terraLayer, floraLayer, faunaLayer);
 
                 if (currAttractiveness > bestAttractiveness || (currAttractiveness == bestAttractiveness && Simulation.RandomIntBetween(0, 100) < 50))
                 {
@@ -198,5 +199,8 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
 
     
 
-    protected abstract int ComputeTileAttractiveness(TerrainType terrainType, PlantCell plantCell, CreatureCell creatureCell);
+    protected abstract int ComputeTileAttractiveness(SimulationPosition at,
+        TerrainType[,] terra,
+        PlantCell[,] flora,
+        CreatureCell[,] fauna);
 }
