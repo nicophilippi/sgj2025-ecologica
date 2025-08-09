@@ -80,7 +80,7 @@ public partial class SimRenderer : Node2D
         } 
         
         // Animals
-        if (creature != null && creature.Type == CreatureCellType.Sheep)
+        if (creature != null && creature.Type == CreatureCellType.Sheep && creature.Quantity > 0)
         {
             var quant = Mathf.Min(creature.Quantity, creature.MaxQuantity);
             var i = Mathf.FloorToInt(quant / (float)(creature.MaxQuantity + 1) * 4f);
@@ -88,7 +88,7 @@ public partial class SimRenderer : Node2D
         }
         else
         {
-            if (creature != null && creature.Type == CreatureCellType.Wolf)
+            if (creature != null && creature.Type == CreatureCellType.Wolf && creature.Quantity > 0)
             {
                 var quant = Mathf.Min(creature.Quantity, creature.MaxQuantity);
                 var i = Mathf.FloorToInt(quant / (float)(creature.MaxQuantity + 1) * 4f);
