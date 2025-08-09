@@ -49,6 +49,7 @@ public static class Simulation
         }
 
         FloraLayer[35, 35] = new GrassCell();
+        FaunaLayer[35, 36] = new SheepCell(1);
     }
 
     public static void OnTick()

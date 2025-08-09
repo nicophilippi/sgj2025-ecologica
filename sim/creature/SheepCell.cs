@@ -12,8 +12,14 @@ public class SheepCell(int quantity) : CreatureCell(CreatureCellType.Sheep, quan
 
         if (terrainType == TerrainType.Plains) attractiveness += 10;
 
-        if (plantCell != null && plantCell.Type == PlantCellType.Grass) attractiveness += 20;
+        if (plantCell != null && plantCell.Type == PlantCellType.Grass)
+        {
+            attractiveness += 20;
+            attractiveness += plantCell.Health;
+        }
         
+        // if (creatureCell.Type == CreatureCellType.Wolf) attractiveness -= 100;
+
         return attractiveness;
     }
 }
