@@ -1,11 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctrrltfx10hy5"]
+[gd_scene load_steps=11 format=3 uid="uid://ctrrltfx10hy5"]
 
 [ext_resource type="Script" uid="uid://c5gjwx6t40ret" path="res://Root.cs" id="1_pq8q7"]
 [ext_resource type="PackedScene" uid="uid://cfu50yb8q35q4" path="res://Scenes/card_manager.tscn" id="2_pyidc"]
+[ext_resource type="Texture2D" uid="uid://gnuk44hrhslw" path="res://Graphics/Erde.png" id="3_l8v81"]
 [ext_resource type="Script" uid="uid://d02c3vtn0c24u" path="res://Code/SimRenderer.cs" id="3_vvh5c"]
-[ext_resource type="Texture2D" uid="uid://fgubqipb62qk" path="res://icon.svg" id="4_28aoi"]
+[ext_resource type="Texture2D" uid="uid://dc2djdsptkqrq" path="res://Graphics/Gras3.png" id="4_tw3kd"]
+[ext_resource type="Texture2D" uid="uid://d11xadspvao37" path="res://Graphics/Gras2.png" id="5_gd4vy"]
 [ext_resource type="Script" uid="uid://cvtgji52pnfp6" path="res://Code/Camera2d.cs" id="5_jnlp7"]
 [ext_resource type="PackedScene" uid="uid://bd0a4hnukyaay" path="res://Scenes/ui.tscn" id="5_l8v81"]
+[ext_resource type="Texture2D" uid="uid://cg2puyg8rp2me" path="res://Graphics/Gras1.png" id="6_qw60f"]
+[ext_resource type="Texture2D" uid="uid://d4e7ia44m8ny0" path="res://Graphics/Wiese.png" id="7_eji0w"]
 
 [node name="Root" type="Node"]
 script = ExtResource("1_pq8q7")
@@ -13,14 +17,13 @@ script = ExtResource("1_pq8q7")
 [node name="SimRenderer" type="Node2D" parent="."]
 z_index = -100
 script = ExtResource("3_vvh5c")
-_tex = ExtResource("4_28aoi")
+_barren = ExtResource("3_l8v81")
+_grass = Array[Texture2D]([ExtResource("4_tw3kd"), ExtResource("5_gd4vy"), ExtResource("6_qw60f"), ExtResource("7_eji0w")])
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(574, 327)
 script = ExtResource("5_jnlp7")
 _zoomSpeed = Vector2(0.04, 0.04)
-_zoomMin = 0.25
-_zoomMax = 1.0
 
 [node name="CanvasLayer" parent="." instance=ExtResource("5_l8v81")]
 

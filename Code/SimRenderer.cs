@@ -1,5 +1,9 @@
 using Godot;
 using NewGameProject.sim;
+using NewGameProject.sim.creature;
+using NewGameProject.sim.plant;
+using NewGameProject.sim.terrain;
+using NewGameProject.sim.util;
 
 public partial class SimRenderer : Node2D
 {
@@ -9,21 +13,24 @@ public partial class SimRenderer : Node2D
     }
 
 
-    [Export] private Texture2D _tex;
-    [Export] private Vector2 _cellSize = new(128f, 128f);
+    [Export] private Texture2D _barren; 
+    [Export] private Texture2D[] _grass;
     private RenderedCell[,] _sprites;
 
 
     public override void _EnterTree()
     {
         base._EnterTree();
+        
+        // generate
+        Simulation.OnInit();
 
         _sprites = new RenderedCell[Simulation.WorldSize, Simulation.WorldSize];
 
         for (var x = 0; x < Simulation.WorldSize; x++)
         for (var y = 0; y < Simulation.WorldSize; y++)
         {
-            _sprites[x, y] = InitCell(new Vector2(x, y) * _cellSize);
+            _sprites[x, y] = InitCell(new Vector2(x, y) * Root.Instance.GridSize);
         }
     }
 
@@ -36,8 +43,11 @@ public partial class SimRenderer : Node2D
         for (var y = 0; y < _sprites.GetLength(1); y++)
         {
             var sprite = _sprites[x, y];
-            var data = LoseReferences.GetTile(x, y);
-            DrawCell(sprite, data);
+            var pos = new SimulationPosition(x, y);
+            var creature = Simulation.GetCreatureCell(pos);
+            var plant = Simulation.GetPlantCell(pos);
+            var terrain = Simulation.GetTerrainCell(pos);
+            DrawCell(sprite, creature, plant, terrain);
         }
     }
 
@@ -49,14 +59,21 @@ public partial class SimRenderer : Node2D
         o.Sprite = new Sprite2D();
         AddChild(o.Sprite); // IMPORTANT!
         o.Sprite.Position = at;
-        o.Sprite.Texture = _tex;
-
         return o;
     }
 
 
-    private void DrawCell(RenderedCell rendCell, LoseReferences.WhateverTheFuckTileDataLooksLike tileData)
+    private void DrawCell(RenderedCell rendCell, CreatureCell creature, PlantCell plant, TerrainType terrain)
     {
-        rendCell.Sprite.Modulate = Colors.Green;
+        // Plants
+        if (plant == null || plant.Type == PlantCellType.Barren)
+        {
+            rendCell.Sprite.Texture = _barren;
+        }
+        else if (plant.Type == PlantCellType.Grass)
+        {
+            var i = Mathf.FloorToInt(plant.Health / (float)(plant.MaxHealth + 1) * 4f);
+            rendCell.Sprite.Texture = _grass[i];
+        } 
     }
 }

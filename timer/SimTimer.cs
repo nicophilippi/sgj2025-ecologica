@@ -1,9 +1,10 @@
 using Godot;
+using NewGameProject.sim;
 
 public partial class SimTimer : Godot.Timer
 {
     private bool running = false;
-    private const double TIMER_INTERVAL = 0.07; // Do not use less than 0.05s! May cause issues with physics frame interval
+    private const double TIMER_INTERVAL = 1; // Do not use less than 0.05s! May cause issues with physics frame interval
     public override void _EnterTree()
     {
         base._EnterTree();
@@ -31,7 +32,7 @@ public partial class SimTimer : Godot.Timer
     
     private void Test()
     {
-        // GD.Print("Hello World!");
+        Simulation.OnTick();
     }
     
     

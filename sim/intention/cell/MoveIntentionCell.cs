@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Godot;
 using NewGameProject.sim.creature;
 using NewGameProject.sim.plant;
 using NewGameProject.sim.terrain;
@@ -21,6 +22,10 @@ public struct MoveIntentionCell()
         MoveIntentionCell[,] intentionLayer
     )
     {
+        if (Intentions == null)
+        {
+            GD.Print("WTF");
+        }
         // No intentions to deconflict
         if (Intentions.Count == 0)
         {

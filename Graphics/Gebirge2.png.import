@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmjm74fcycceu"
-path="res://.godot/imported/Gras.png-6355d2811196d854ebe4a712c832c10c.ctex"
+uid="uid://c213n3el1ij4g"
+path="res://.godot/imported/Gebirge2.png-0aa21db9f25999b3aac32785e636d20e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/Gras.png"
-dest_files=["res://.godot/imported/Gras.png-6355d2811196d854ebe4a712c832c10c.ctex"]
+source_file="res://Graphics/Gebirge2.png"
+dest_files=["res://.godot/imported/Gebirge2.png-0aa21db9f25999b3aac32785e636d20e.ctex"]
 
 [params]
 
