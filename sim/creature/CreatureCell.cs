@@ -47,7 +47,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
                 
                 if (currX is < 0 or >= Simulation.WorldSize || currY is < 0 or >= Simulation.WorldSize) continue;
 
-                if (faunaLayer[currX, currY] != null && faunaLayer[currX, currY].Type != CreatureCellType.Empty) continue;
+                if (faunaLayer[currX, currY] != null && faunaLayer[currX, currY] != null) continue;
                 
                 int currAttractiveness = ComputeTileAttractiveness(terraLayer[currX, currY], floraLayer[currX, currY], faunaLayer[currX, currY]);
 
@@ -134,16 +134,16 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
         PlantCell plantCell = floraLayer[x, y];
         CreatureCell creatureCell = faunaLayer[x, y];
         
-        if(creatureCell == null || creatureCell.Type == CreatureCellType.Empty) return;
+        if(creatureCell == null) return;
 
         if (creatureCell.Type == CreatureCellType.Sheep)
         {
-            if (plantCell == null || plantCell.Type == PlantCellType.Barren)
+            if (plantCell == null)
             {
                 creatureCell.Quantity -= Constants.HUNGER_DAMAGE;
                 if (creatureCell.Quantity <= 0)
                 {
-                    faunaLayer[x, y] = new EmptyCell();
+                    faunaLayer[x, y] = null;
                 }
             }
             else
@@ -151,7 +151,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
                 plantCell.Health -= creatureCell.Quantity = 1 + Mathf.RoundToInt((float) creatureCell.Quantity / creatureCell.MaxQuantity);;
                 if (plantCell.Health <= 0)
                 {
-                    floraLayer[x, y] = new BarrenCell();
+                    floraLayer[x, y] = null;
                 }
             }
         }

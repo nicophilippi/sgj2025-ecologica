@@ -60,7 +60,7 @@ public struct MoveIntentionCell()
         winnerCreatureCell.Quantity -= winnerIntention.Quantity;
         if (winnerCreatureCell.Quantity == 0)
         {
-            faunaLayer[winnerIntention.FromPosition.X, winnerIntention.FromPosition.Y] = new EmptyCell();
+            faunaLayer[winnerIntention.FromPosition.X, winnerIntention.FromPosition.Y] = null;
         }
 
         faunaLayer[x, y] = winnerCreatureCell.Type switch
