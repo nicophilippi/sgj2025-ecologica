@@ -90,6 +90,7 @@ public struct ProcreateIntentionCell()
                 faunaLayer[x, y] = winnerCreatureCell.Type switch
                 {
                     CreatureCellType.Sheep => new SheepCell(1),
+                    CreatureCellType.Empty => new EmptyCell(),
                     _ => throw new ArgumentOutOfRangeException("")
                 };
                 break;

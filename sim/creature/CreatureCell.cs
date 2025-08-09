@@ -15,8 +15,8 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int visi
     public int Hunger { get; set; } = 0;
     public int VisionRange { get; } = visionRange;
     
-    public SimulationPosition FocusPosition;
-    public int FocusAttractiveness;
+    public SimulationPosition FocusPosition = new(0, 0);
+    public int FocusAttractiveness = 0;
     
     public override void ComputeMoveIntentions(
         int x,
@@ -27,6 +27,9 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int visi
         MoveIntentionCell[,] intentionLayer
     )
     {
+        // If there's no creature, we can't do anything :(
+        if (type == CreatureCellType.Empty) return;
+        
         SimulationPosition
             myPosition = new(x, y),
             bestPosition = myPosition,
@@ -41,6 +44,8 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int visi
         {
             for (int currY = y - VisionRange; currY <= y + VisionRange; ++currY)
             {
+                if (currX == x && currY == y) continue;
+                
                 if (currX is < 0 or >= Simulation.WorldSize || currY is < 0 or >= Simulation.WorldSize) continue;
                 
                 int currAttractiveness = ComputeTileAttractiveness(terraLayer[currX, currY], floraLayer[currX, currY], faunaLayer[currX, currY]);
@@ -125,7 +130,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int visi
         EatIntentionCell[,] intentionLayer
     )
     {
-        
+        // Not yet implemented...
     }
 
     public override void ComputeProcreateIntentions(
@@ -137,7 +142,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int visi
         ProcreateIntentionCell[,] intentionLayer
     )
     {
-        
+        // Not yet implemented...
     }
 
     

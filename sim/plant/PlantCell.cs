@@ -49,8 +49,8 @@ public abstract class PlantCell(PlantCellType type, int maxHealth) : Cell
         var currCell = terraLayer[x, y];
 
         Health = IsHabitable(currCell)
-            ? int.Max(Health - 1, 0)
-            : int.Min(Health + 1, MaxHealth);
+            ? int.Min(Health + 1, MaxHealth)
+            : int.Max(Health - 1, 0);
 
         if (Health == 0)
         {

@@ -41,6 +41,10 @@ public static class Simulation
                 TerraLayer[x, y] = TerrainType.Plains;
                 FloraLayer[x, y] = new BarrenCell();
                 FaunaLayer[x, y] = new EmptyCell();
+
+                MoveIntentionLayer[x, y] = new MoveIntentionCell();
+                EatIntentionLayer[x, y] = new EatIntentionCell();
+                ProcreateIntentionLayer[x, y] = new ProcreateIntentionCell();
             }
         }
 
