@@ -19,7 +19,8 @@ public partial class CardManager : Node2D
         base._EnterTree();
 
         _cards = _startCards.Select(s => s.Instantiate<Card>()).ToArray();
-        if (_cards.Length != _cardPivots.Length) GD.PrintErr("_cards.Length != _cardPivots.Length");
+        if (_cards.Length != _cardPivots.Length)
+            GD.PrintErr($"_cards.Length ({_cards.Length}) != _cardPivots.Length ({_cardPivots.Length})");
         foreach (var c in _cards) AddChild(c);
     }
 
