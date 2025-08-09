@@ -7,9 +7,11 @@ public partial class CardManager : Node2D
     [Export] private PackedScene[] _startCards;
     [Export] private PackedScene[] _allCards;
     [Export] public float SelectDistance = 150f;
+    [Export] public float ScaleFix = 1f;
 
 
     private Card[] _cards;
+    private Vector2[] _targetScales;
     private Card _selected;
     private int _tier;
 
@@ -22,6 +24,7 @@ public partial class CardManager : Node2D
         if (_cards.Length != _cardPivots.Length)
             GD.PrintErr($"_cards.Length ({_cards.Length}) != _cardPivots.Length ({_cardPivots.Length})");
         foreach (var c in _cards) AddChild(c);
+        _targetScales = new Vector2[_cards.Length];
     }
 
 
@@ -33,7 +36,7 @@ public partial class CardManager : Node2D
         {
             c.GlobalPosition = _cardPivots[i].GlobalPosition;
             c.GlobalRotation = _cardPivots[i].GlobalRotation;
-            c.GlobalScale = new Vector2(0.5f, 0.5f);
+            _targetScales[i] = new Vector2(0.5f, 0.5f);
         }
 
         // Mouse Above Calculation
@@ -45,7 +48,7 @@ public partial class CardManager : Node2D
         if (lenToMinSqr > SelectDistance * SelectDistance) minI = -1;
 
         // Mouse Above Upscale
-        if (minI != -1) _cards[minI].GlobalScale = new Vector2(0.75f, 0.75f);
+        if (minI != -1) _targetScales[minI] = new Vector2(0.75f, 0.75f);
 
         #region _selectedUpdates
 
@@ -54,8 +57,14 @@ public partial class CardManager : Node2D
         if (Input.IsMouseButtonPressed(MouseButton.Right)) _selected = null;
 
         #endregion
+
+        foreach (var (c, i) in _cards.WithIndex()
+                     .Where(t => t.el != _selected))
+        {
+            c.GlobalScale = c.GlobalScale.MoveToward(_targetScales[i], ScaleFix * (float) delta);
+        }
         
         // _selected Upscale
-        if (_selected != null) _selected.GlobalScale = Vector2.One;
+        if (_selected != null) _selected.GlobalScale = _selected.GlobalScale.MoveToward(Vector2.One, ScaleFix * (float) delta);
     }
 }
