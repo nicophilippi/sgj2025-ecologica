@@ -1,14 +1,18 @@
-[gd_scene load_steps=10 format=3 uid="uid://bd0a4hnukyaay"]
+[gd_scene load_steps=14 format=3 uid="uid://bd0a4hnukyaay"]
 
-[ext_resource type="Script" uid="uid://c2av3xc2i7lq6" path="res://Code/Tooltip.cs" id="1_jxero"]
+[ext_resource type="Script" uid="uid://8r6bxeotrbi" path="res://Code/Tooltip.cs" id="1_jxero"]
 [ext_resource type="Texture2D" uid="uid://c3swwhf2ox0r6" path="res://Graphics/Playbutton.png" id="2_qdvrb"]
-[ext_resource type="Script" uid="uid://cq8wwxv44xwpm" path="res://Code/PauseButton.cs" id="3_nf4gj"]
+[ext_resource type="Script" uid="uid://dsvrm1er7hrct" path="res://Code/PauseButton.cs" id="3_nf4gj"]
 [ext_resource type="Texture2D" uid="uid://op3odwo5mf1t" path="res://Graphics/Pausebutton.png" id="4_2246s"]
 [ext_resource type="Texture2D" uid="uid://bl6yqq2d8uod4" path="res://Graphics/PlusbuttonGedrueckt.png" id="4_mmixe"]
 [ext_resource type="Texture2D" uid="uid://maasu0rtabgw" path="res://Graphics/Minusbutton.png" id="5_nt8jn"]
-[ext_resource type="Script" uid="uid://d1etkk4wvghfd" path="res://Code/PointsText.cs" id="5_q7pk6"]
-[ext_resource type="Script" uid="uid://c1k1yh2qh555d" path="res://Code/CrownIcon.cs" id="6_m78vo"]
+[ext_resource type="Script" uid="uid://cm1lrn60h4sui" path="res://Code/PointsText.cs" id="5_q7pk6"]
+[ext_resource type="Texture2D" uid="uid://cr8708oc18f8m" path="res://Graphics/MinusbuttonGedrueckt.png" id="6_4vbiv"]
+[ext_resource type="Script" uid="uid://c1iqutfiwtmku" path="res://Code/CrownIcon.cs" id="6_m78vo"]
 [ext_resource type="Texture2D" uid="uid://pwpb1cogt0d3" path="res://Graphics/Kronebutton.png" id="6_smcll"]
+[ext_resource type="Texture2D" uid="uid://c0e80pkeao4it" path="res://Graphics/Resetbutton.png" id="11_3r70p"]
+[ext_resource type="Texture2D" uid="uid://ohqfrn45bqp6" path="res://Graphics/ResetbuttonGedrueckt.png" id="12_8fs27"]
+[ext_resource type="Script" uid="uid://b4v5j75fs05xc" path="res://Code/ResetButton.cs" id="13_3r70p"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
@@ -46,6 +50,7 @@ offset_left = -70.0
 offset_right = -6.0
 offset_bottom = 64.0
 texture_normal = ExtResource("4_mmixe")
+texture_pressed = ExtResource("4_mmixe")
 
 [node name="SpeeddownButton" type="TextureButton" parent="PauseButton"]
 layout_mode = 0
@@ -54,6 +59,7 @@ offset_top = 0.5
 offset_right = -77.5
 offset_bottom = 64.5
 texture_normal = ExtResource("5_nt8jn")
+texture_pressed = ExtResource("6_4vbiv")
 
 [node name="Tooltip" type="Control" parent="."]
 visible = false
@@ -102,7 +108,21 @@ script = ExtResource("5_q7pk6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(986, 79)
+position = Vector2(520, 137)
 scale = Vector2(2.125, 2.17188)
 texture = ExtResource("6_smcll")
 script = ExtResource("6_m78vo")
+
+[node name="ResetButton" type="TextureButton" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -143.0
+offset_top = 141.0
+offset_right = -79.0
+offset_bottom = 205.0
+grow_horizontal = 0
+scale = Vector2(2, 2)
+texture_normal = ExtResource("11_3r70p")
+texture_pressed = ExtResource("12_8fs27")
+script = ExtResource("13_3r70p")

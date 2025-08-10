@@ -93,6 +93,16 @@ public static class Simulation
         }
         GD.Print($"Tick: {TickCount}: Plants: {num_plants}, Animals: {num_animals}");
     }
+
+    public static void resetSimulation()
+    {
+        ForEachWorldPosition((x, y) =>
+        {
+            FaunaLayer[x, y] = null;
+            FloraLayer[x, y] = null;
+        });
+        SimulationPoints = 0;
+    }
     
     public static TerrainType GetTerrainCell(SimulationPosition i) => TerraLayer[i.X, i.Y];
     

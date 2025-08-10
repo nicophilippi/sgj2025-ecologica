@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cfu50yb8q35q4"]
 
-[ext_resource type="Script" uid="uid://dwmtfpumvqkvi" path="res://Code/Cards/CardManager.cs" id="1_pikqg"]
+[ext_resource type="Script" uid="uid://47mx06cfkmxh" path="res://Code/Cards/CardManager.cs" id="1_pikqg"]
 [ext_resource type="PackedScene" uid="uid://nb77vexidqmv" path="res://Scenes/point_grass_card.tscn" id="2_8klf7"]
 [ext_resource type="PackedScene" uid="uid://bnbqkqjxyosp5" path="res://Scenes/sheep_card.tscn" id="3_w6ora"]
 [ext_resource type="PackedScene" uid="uid://knvs4fvlihay" path="res://Scenes/wolf_card.tscn" id="4_w6ora"]
