@@ -5,7 +5,6 @@
 
 [node name="TestCard" type="Node2D"]
 script = ExtResource("1_0gy2v")
-HowMany = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0, 0, 1)

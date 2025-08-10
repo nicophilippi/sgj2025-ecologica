@@ -18,7 +18,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
     public int VisionRange { get; } = visionRange;
     
     
-    private int _arePreviously = 0;
+    private int _atePreviously = 0;
     
     public override void ComputeMoveIntentions(
         int x,
@@ -158,7 +158,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
             }
             else
             {
-                _arePreviously = Mathf.Min(plantCell.Health, Constants.FEEDING_DAMAGE);
+                _atePreviously = Mathf.Min(plantCell.Health, Constants.FEEDING_DAMAGE);
                 plantCell.Health -= Constants.FEEDING_DAMAGE;
                 if (plantCell.Health <= 0)
                 {
@@ -192,7 +192,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
                 var chosenFoodAt = availableFoodAt[GD.RandRange(0, availableFoodAt.Count - 1)];
                 var chosenFood = faunaLayer[chosenFoodAt.X, chosenFoodAt.Y];
 
-                _arePreviously = Mathf.Min(chosenFood.Quantity, Constants.FEEDING_DAMAGE);
+                _atePreviously = Mathf.Min(chosenFood.Quantity, Constants.FEEDING_DAMAGE);
                 chosenFood.Quantity -= Constants.FEEDING_DAMAGE;
                 if (chosenFood.Quantity <= 0) faunaLayer[chosenFoodAt.X, chosenFoodAt.Y] = null;
             }
@@ -211,7 +211,9 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
     {
         var creatureCell = faunaLayer[x, y];
         if (creatureCell == null) return;
-        creatureCell.Quantity += _arePreviously;
+        if (creatureCell.Type == CreatureCellType.Sheep) creatureCell.Quantity += _atePreviously;
+        else if (creatureCell.Type == CreatureCellType.Wolf) creatureCell.Quantity += _atePreviously * 3;
+        else throw new NotImplementedException();
         if (creatureCell.Quantity > creatureCell.MaxQuantity) creatureCell.Quantity = creatureCell.MaxQuantity;
     }
 

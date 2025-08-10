@@ -4,7 +4,7 @@ using NewGameProject.sim.util;
 
 namespace NewGameProject.sim.creature;
 
-public class WolfCell(int quantity) : CreatureCell(CreatureCellType.Wolf, quantity, 5, 1)
+public class WolfCell(int quantity) : CreatureCell(CreatureCellType.Wolf, quantity, 20, 1)
 {
     protected override int ComputeTileAttractiveness(SimulationPosition at,
         TerrainType[,] terra,
