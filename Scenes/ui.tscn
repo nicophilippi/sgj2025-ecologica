@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://bd0a4hnukyaay"]
+[gd_scene load_steps=8 format=3 uid="uid://bd0a4hnukyaay"]
 
 [ext_resource type="Script" uid="uid://c2av3xc2i7lq6" path="res://Code/Tooltip.cs" id="1_jxero"]
 [ext_resource type="Texture2D" uid="uid://c3swwhf2ox0r6" path="res://Graphics/Playbutton.png" id="2_qdvrb"]
 [ext_resource type="Script" uid="uid://cq8wwxv44xwpm" path="res://Code/PauseButton.cs" id="3_nf4gj"]
 [ext_resource type="Texture2D" uid="uid://op3odwo5mf1t" path="res://Graphics/Pausebutton.png" id="4_2246s"]
 [ext_resource type="Script" uid="uid://d1etkk4wvghfd" path="res://Code/PointsText.cs" id="5_q7pk6"]
+[ext_resource type="Script" uid="uid://cm1lrn60h4sui" path="res://Code/PointsText.cs" id="5_q7pk6"]
+[ext_resource type="Script" uid="uid://c1iqutfiwtmku" path="res://Code/CrownIcon.cs" id="6_m78vo"]
+[ext_resource type="Texture2D" uid="uid://d0e77quto7nt1" path="res://Graphics/Kronebutton.png" id="6_smcll"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
@@ -13,8 +16,9 @@ modulate = Color(1, 1, 1, 0.439216)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 48.0
+offset_left = 49.0
 offset_top = 45.0
+offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/normal_font_size = 25
@@ -85,10 +89,19 @@ text = "Gras
 scroll_active = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
+modulate = Color(1, 1, 1, 0.43)
 offset_left = 489.0
 offset_top = 55.0
 offset_right = 687.0
 offset_bottom = 101.0
+theme_override_font_sizes/normal_font_size = 25
 text = "Hallo!"
 fit_content = true
 script = ExtResource("5_q7pk6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(986, 79)
+scale = Vector2(2.125, 2.17188)
+texture = ExtResource("6_smcll")
+script = ExtResource("6_m78vo")

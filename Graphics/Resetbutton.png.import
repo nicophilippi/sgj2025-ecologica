@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://maasu0rtabgw"
-path="res://.godot/imported/Minusbutton.png-18f9a8ba40d2192b2f57c4e91110152f.ctex"
+uid="uid://c0e80pkeao4it"
+path="res://.godot/imported/Resetbutton.png-aae8e0411e1babb4b38a0c65b3e722f4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/Minusbutton.png"
-dest_files=["res://.godot/imported/Minusbutton.png-18f9a8ba40d2192b2f57c4e91110152f.ctex"]
+source_file="res://Graphics/Resetbutton.png"
+dest_files=["res://.godot/imported/Resetbutton.png-aae8e0411e1babb4b38a0c65b3e722f4.ctex"]
 
 [params]
 

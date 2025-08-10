@@ -3,6 +3,8 @@ using Godot;
 public partial class Camera2d : Camera2D
 {
     public static Camera2d Instance { get; private set; }
+    private static float camPosX = 574;
+    private static float camPosY = 327;
     
     
     [Export] private Vector2 _zoomSpeed = Vector2.One;
@@ -44,7 +46,7 @@ public partial class Camera2d : Camera2D
         if (Input.IsActionPressed("camera return"))
         {
             Zoom = Vector2.One;
-            Position = Vector2.Zero;
+            Position = new Vector2(camPosX, camPosY);
         }
     }
 
