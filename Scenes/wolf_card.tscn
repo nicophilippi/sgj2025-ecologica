@@ -1,10 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://knvs4fvlihay"]
 
-[ext_resource type="Script" uid="uid://d3veg78wpu5nr" path="res://Code/Cards/WolfCard.cs" id="1_0gy2v"]
+[ext_resource type="Script" uid="uid://dxhsf1pwx4ndn" path="res://Code/Cards/WolfCard.cs" id="1_0gy2v"]
 [ext_resource type="Texture2D" uid="uid://ce58jelg5lpb5" path="res://Graphics/GrosseKarteWolf.png" id="2_0gy2v"]
 
 [node name="TestCard" type="Node2D"]
 script = ExtResource("1_0gy2v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_0gy2v")

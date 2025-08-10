@@ -38,7 +38,7 @@ public partial class PauseButton : TextureButton
     {
         base._Process(delta);
 
-        if (Input.IsActionJustPressed("pause")) TogglePause();
+        // if (Input.IsActionJustPressed("pause")) TogglePause();
     }
 
 

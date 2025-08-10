@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bnbqkqjxyosp5"]
 
-[ext_resource type="Script" uid="uid://723hqdgigwyi" path="res://Code/Cards/SheepCard.cs" id="1_owvsd"]
+[ext_resource type="Script" uid="uid://vfuqbs3bjxds" path="res://Code/Cards/SheepCard.cs" id="1_owvsd"]
 [ext_resource type="Texture2D" uid="uid://bcmegvpo81d0y" path="res://Graphics/GrosseKarteSchaf.png" id="2_owvsd"]
 
 [node name="TestCard" type="Node2D"]
@@ -9,5 +9,5 @@ HowMany = 10
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0.749999, -0.125005)
-scale = Vector2(0.980469, 0.986328)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_owvsd")
