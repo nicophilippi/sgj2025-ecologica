@@ -1,25 +1,19 @@
 using Godot;
 using System;
+using NewGameProject.sim;
 
 public partial class PointsText : RichTextLabel
 {
-    private static long DisplayPoints = 0;
-
     public override void _EnterTree()
     {
         base._EnterTree();
-        Text = $"Points: {DisplayPoints}";
+        Text = $"Points: {Simulation.SimulationPoints}";
     }
-
-    public static void updatePoints(long points)
-    {
-        DisplayPoints = points;
-    }
-
+    
     public override void _Process(double delta)
     {
         base._Process(delta);
-        Text = $"Points: {DisplayPoints}";
+        Text = $"Points: {Simulation.SimulationPoints}";
     }
     
 }

@@ -33,7 +33,6 @@ public partial class SimTimer : Godot.Timer
     private void Tick()
     {
         Simulation.OnTick();
-        PointsText.updatePoints(Simulation.SimulationPoints);
     }
     
     

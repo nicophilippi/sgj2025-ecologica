@@ -14,6 +14,7 @@ public static class Simulation
 
     public static int TickCount = 0; 
     public static int SimulationPoints = 0;
+    public static long NumOverflow = 0;
     
     private static readonly TerrainType[,] TerraLayer = new TerrainType[WorldSize, WorldSize];
     private static readonly PlantCell[,] FloraLayer = new PlantCell[WorldSize, WorldSize];
@@ -77,14 +78,19 @@ public static class Simulation
     {
         int num_plants = 0;
         int num_animals = 0;
+        long oldSim = SimulationPoints;
         ForEachWorldPosition((x, y) =>
         {
             num_plants += FloraLayer[x, y] == null ? 0 : FloraLayer[x, y].Health;
             num_animals += FaunaLayer[x, y] == null ? 0 : FaunaLayer[x, y].Quantity;
         });
-
-        SimulationPoints += num_plants;
-        SimulationPoints += num_animals;
+        
+        SimulationPoints = SimulationPoints + num_plants;
+        SimulationPoints = SimulationPoints + num_animals;
+        if (SimulationPoints < oldSim)
+        {
+            NumOverflow++;
+        }
         GD.Print($"Tick: {TickCount}: Plants: {num_plants}, Animals: {num_animals}");
     }
     
