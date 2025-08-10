@@ -176,7 +176,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
                          || p.Y < 0 || p.Y >= faunaLayer.GetLength(0))
                     return false;
                 var c = faunaLayer[p.X, p.Y];
-                if (c != null && c.Type == CreatureCellType.Sheep) availableFoodAt.Add(i);
+                if (c != null && c.Type == CreatureCellType.Sheep) availableFoodAt.Add(p);
                 return false;
             });
 

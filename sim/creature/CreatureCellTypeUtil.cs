@@ -9,6 +9,7 @@ public static class CreatureCellTypeUtil
 
         return creatureCell.Type switch
         {
+            CreatureCellType.Wolf => 10,
             CreatureCellType.Sheep => 2,
             _ => -1
         };
@@ -20,6 +21,7 @@ public static class CreatureCellTypeUtil
 
         return creatureCell.Type switch
         {
+            CreatureCellType.Wolf => 10,
             CreatureCellType.Sheep => 2,
             _ => -1
         };
