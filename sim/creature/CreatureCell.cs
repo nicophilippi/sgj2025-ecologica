@@ -17,6 +17,9 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
     public int MaxQuantity { get; } = maxQuantity;
     public int VisionRange { get; } = visionRange;
     
+    
+    private int _arePreviously = 0;
+    
     public override void ComputeMoveIntentions(
         int x,
         int y,
@@ -126,8 +129,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
 
     private int SheepMoveQuantity()
     {
-        if (Quantity < 5) return Quantity;
-        return 5;
+        return Quantity / 2;
     }
 
     public override void ComputeEatIntentions(
@@ -156,7 +158,8 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
             }
             else
             {
-                plantCell.Health -= 1 + Mathf.RoundToInt((float) creatureCell.Quantity / creatureCell.MaxQuantity);
+                _arePreviously = Mathf.Min(plantCell.Health, Constants.FEEDING_DAMAGE);
+                plantCell.Health -= Constants.FEEDING_DAMAGE;
                 if (plantCell.Health <= 0)
                 {
                     floraLayer[x, y] = null;
@@ -189,6 +192,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
                 var chosenFoodAt = availableFoodAt[GD.RandRange(0, availableFoodAt.Count - 1)];
                 var chosenFood = faunaLayer[chosenFoodAt.X, chosenFoodAt.Y];
 
+                _arePreviously = Mathf.Min(chosenFood.Quantity, Constants.FEEDING_DAMAGE);
                 chosenFood.Quantity -= Constants.FEEDING_DAMAGE;
                 if (chosenFood.Quantity <= 0) faunaLayer[chosenFoodAt.X, chosenFoodAt.Y] = null;
             }
@@ -207,7 +211,7 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
     {
         var creatureCell = faunaLayer[x, y];
         if (creatureCell == null) return;
-        creatureCell.Quantity += Constants.FERTILITY;
+        creatureCell.Quantity += _arePreviously;
         if (creatureCell.Quantity > creatureCell.MaxQuantity) creatureCell.Quantity = creatureCell.MaxQuantity;
     }
 
