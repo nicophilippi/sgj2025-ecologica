@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://nb77vexidqmv"]
 
-[ext_resource type="Script" uid="uid://dsb63npj544eq" path="res://Code/Cards/FullGrassCard.cs" id="1_1r0gx"]
+[ext_resource type="Script" uid="uid://br3t1bk8eshvo" path="res://Code/Cards/FullGrassCard.cs" id="1_1r0gx"]
 [ext_resource type="Texture2D" uid="uid://bwkmw8ygmqt8y" path="res://Graphics/GrosseKarteGras.png" id="2_1r0gx"]
 
 [node name="TestCard" type="Node2D"]
