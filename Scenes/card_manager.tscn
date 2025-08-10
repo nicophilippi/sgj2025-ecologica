@@ -15,41 +15,41 @@ _allCards = Array[PackedScene]([ExtResource("2_8klf7"), ExtResource("3_w6ora"), 
 PositionFix = 500.0
 
 [node name="CardPivot1" type="Node2D" parent="."]
-position = Vector2(240, 676)
+position = Vector2(241, 641)
 rotation = -0.476645
 
 [node name="SelectedCardPivot1" type="Node2D" parent="."]
-position = Vector2(210, 624)
+position = Vector2(211, 589)
 rotation = -0.476645
 
 [node name="CardPivot2" type="Node2D" parent="."]
-position = Vector2(400, 635)
+position = Vector2(401, 600)
 rotation = -0.284621
 
 [node name="SelectedCardPivot2" type="Node2D" parent="."]
-position = Vector2(382, 573)
+position = Vector2(383, 538)
 rotation = -0.284621
 
 [node name="CardPivot3" type="Node2D" parent="."]
-position = Vector2(569, 615)
+position = Vector2(570, 580)
 
 [node name="SelectedCardPivot3" type="Node2D" parent="."]
-position = Vector2(570, 548)
+position = Vector2(571, 513)
 
 [node name="CardPivot4" type="Node2D" parent="."]
-position = Vector2(739, 638)
+position = Vector2(740, 603)
 rotation = 0.199321
 
 [node name="SelectedCardPivot4" type="Node2D" parent="."]
-position = Vector2(753, 579)
+position = Vector2(754, 544)
 rotation = 0.199321
 
 [node name="CardPivot5" type="Node2D" parent="."]
-position = Vector2(901, 681)
+position = Vector2(902, 646)
 rotation = 0.527575
 
 [node name="SelectedCardPivot5" type="Node2D" parent="."]
-position = Vector2(932, 624)
+position = Vector2(933, 589)
 rotation = 0.4916
 
 [node name="NewCards" type="Node2D" parent="."]
