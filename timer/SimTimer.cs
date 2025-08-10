@@ -9,13 +9,13 @@ public partial class SimTimer : Godot.Timer
     {
         base._EnterTree();
         base.WaitTime = TIMER_INTERVAL;
-        Timeout += Test;
+        Timeout += Tick;
     }
 
     public override void _ExitTree()
     {
         base._ExitTree();
-        Timeout -= Test;
+        Timeout -= Tick;
     }
 
     public void ChangeTimer()
@@ -30,9 +30,10 @@ public partial class SimTimer : Godot.Timer
 		}
     }
     
-    private void Test()
+    private void Tick()
     {
         Simulation.OnTick();
+        PointsText.updatePoints(Simulation.SimulationPoints);
     }
     
     

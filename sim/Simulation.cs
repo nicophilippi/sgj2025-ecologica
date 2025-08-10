@@ -13,6 +13,7 @@ public static class Simulation
     public const int WorldSize = 70;
 
     public static int TickCount = 0; 
+    public static int SimulationPoints = 0;
     
     private static readonly TerrainType[,] TerraLayer = new TerrainType[WorldSize, WorldSize];
     private static readonly PlantCell[,] FloraLayer = new PlantCell[WorldSize, WorldSize];
@@ -82,6 +83,8 @@ public static class Simulation
             num_animals += FaunaLayer[x, y] == null ? 0 : FaunaLayer[x, y].Quantity;
         });
 
+        SimulationPoints += num_plants;
+        SimulationPoints += num_animals;
         GD.Print($"Tick: {TickCount}: Plants: {num_plants}, Animals: {num_animals}");
     }
     

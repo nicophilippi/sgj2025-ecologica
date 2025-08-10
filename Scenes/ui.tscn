@@ -1,11 +1,37 @@
-[gd_scene load_steps=5 format=3 uid="uid://bd0a4hnukyaay"]
+[gd_scene load_steps=6 format=3 uid="uid://bd0a4hnukyaay"]
 
-[ext_resource type="Script" uid="uid://c2av3xc2i7lq6" path="res://Code/Tooltip.cs" id="1_jxero"]
+[ext_resource type="Script" uid="uid://8r6bxeotrbi" path="res://Code/Tooltip.cs" id="1_jxero"]
 [ext_resource type="Texture2D" uid="uid://c3swwhf2ox0r6" path="res://Graphics/Playbutton.png" id="2_qdvrb"]
-[ext_resource type="Script" uid="uid://cq8wwxv44xwpm" path="res://Code/PauseButton.cs" id="3_nf4gj"]
+[ext_resource type="Script" uid="uid://dsvrm1er7hrct" path="res://Code/PauseButton.cs" id="3_nf4gj"]
 [ext_resource type="Texture2D" uid="uid://op3odwo5mf1t" path="res://Graphics/Pausebutton.png" id="4_2246s"]
+[ext_resource type="Script" uid="uid://cm1lrn60h4sui" path="res://Code/PointsText.cs" id="5_q7pk6"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="ControlsRundown" type="RichTextLabel" parent="."]
+modulate = Color(1, 1, 1, 0.439216)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 25
+text = "WASD: Kamera bewegen
+H: Kamera zurücksetzen
+Leertaste: Pausieren/Spielen"
+
+[node name="PauseButton" type="TextureButton" parent="."]
+offset_left = 1011.0
+offset_top = 14.0
+offset_right = 1075.0
+offset_bottom = 78.0
+scale = Vector2(2, 2)
+texture_normal = ExtResource("2_qdvrb")
+script = ExtResource("3_nf4gj")
+_pausedTex = ExtResource("4_2246s")
+_unpausedTex = ExtResource("2_qdvrb")
 
 [node name="Tooltip" type="Control" parent="."]
 visible = false
@@ -41,27 +67,11 @@ text = "Gras
 "
 scroll_active = false
 
-[node name="ControlsRundown" type="RichTextLabel" parent="."]
-modulate = Color(1, 1, 1, 0.439216)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 48.0
-offset_top = 45.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/normal_font_size = 25
-text = "WASD: Kamera bewegen
-H: Kamera zurücksetzen
-Leertaste: Pausieren/Spielen"
-
-[node name="PauseButton" type="TextureButton" parent="."]
-offset_left = 1011.0
-offset_top = 14.0
-offset_right = 1075.0
-offset_bottom = 78.0
-scale = Vector2(2, 2)
-texture_normal = ExtResource("2_qdvrb")
-script = ExtResource("3_nf4gj")
-_pausedTex = ExtResource("4_2246s")
-_unpausedTex = ExtResource("2_qdvrb")
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 489.0
+offset_top = 55.0
+offset_right = 687.0
+offset_bottom = 101.0
+text = "Hallo!"
+fit_content = true
+script = ExtResource("5_q7pk6")
