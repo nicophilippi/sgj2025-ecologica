@@ -1,16 +1,18 @@
 [gd_scene load_steps=5 format=3 uid="uid://cfu50yb8q35q4"]
 
-[ext_resource type="Script" uid="uid://47mx06cfkmxh" path="res://Code/Cards/CardManager.cs" id="1_pikqg"]
+[ext_resource type="Script" uid="uid://dwmtfpumvqkvi" path="res://Code/Cards/CardManager.cs" id="1_pikqg"]
 [ext_resource type="PackedScene" uid="uid://nb77vexidqmv" path="res://Scenes/point_grass_card.tscn" id="2_8klf7"]
 [ext_resource type="PackedScene" uid="uid://bnbqkqjxyosp5" path="res://Scenes/sheep_card.tscn" id="3_w6ora"]
 [ext_resource type="PackedScene" uid="uid://knvs4fvlihay" path="res://Scenes/wolf_card.tscn" id="4_w6ora"]
 
-[node name="CardManager" type="Node2D" node_paths=PackedStringArray("_cardPivots", "_selectedCardPivots")]
+[node name="CardManager" type="Node2D" node_paths=PackedStringArray("_cardPivots", "_selectedCardPivots", "_newCardsAt")]
 script = ExtResource("1_pikqg")
 _cardPivots = [NodePath("CardPivot1"), NodePath("CardPivot2"), NodePath("CardPivot3"), NodePath("CardPivot4"), NodePath("CardPivot5")]
-_selectedCardPivots = []
+_selectedCardPivots = [NodePath("SelectedCardPivot1"), NodePath("SelectedCardPivot2"), NodePath("SelectedCardPivot3"), NodePath("SelectedCardPivot4"), NodePath("SelectedCardPivot5")]
+_newCardsAt = NodePath("NewCards")
 _startCards = Array[PackedScene]([ExtResource("2_8klf7"), ExtResource("2_8klf7"), ExtResource("2_8klf7"), ExtResource("3_w6ora"), ExtResource("3_w6ora")])
 _allCards = Array[PackedScene]([ExtResource("2_8klf7"), ExtResource("3_w6ora"), ExtResource("4_w6ora")])
+PositionFix = 800.0
 
 [node name="CardPivot1" type="Node2D" parent="."]
 position = Vector2(241, 641)
