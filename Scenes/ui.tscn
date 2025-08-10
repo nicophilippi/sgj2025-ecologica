@@ -4,13 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://c3swwhf2ox0r6" path="res://Graphics/Playbutton.png" id="2_qdvrb"]
 [ext_resource type="Script" uid="uid://dsvrm1er7hrct" path="res://Code/PauseButton.cs" id="3_nf4gj"]
 [ext_resource type="Texture2D" uid="uid://op3odwo5mf1t" path="res://Graphics/Pausebutton.png" id="4_2246s"]
-<<<<<<< Updated upstream
-[ext_resource type="Script" uid="uid://d1etkk4wvghfd" path="res://Code/PointsText.cs" id="5_q7pk6"]
-[ext_resource type="Script" uid="uid://c1k1yh2qh555d" path="res://Code/CrownIcon.cs" id="6_m78vo"]
-=======
 [ext_resource type="Script" uid="uid://cm1lrn60h4sui" path="res://Code/PointsText.cs" id="5_q7pk6"]
 [ext_resource type="Script" uid="uid://c1iqutfiwtmku" path="res://Code/CrownIcon.cs" id="6_m78vo"]
->>>>>>> Stashed changes
 [ext_resource type="Texture2D" uid="uid://pwpb1cogt0d3" path="res://Graphics/Kronebutton.png" id="6_smcll"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
@@ -30,7 +25,7 @@ text = "WASD: Kamera bewegen
 H: Kamera zurücksetzen
 Leertaste: Pausieren/Spielen"
 
-[node name="PauseButton" type="TextureButton" parent="."]
+[node name="PauseButton" type="TextureButton" parent="." node_paths=PackedStringArray("_increaseSpeed", "_decreaseSpeed")]
 offset_left = 1011.0
 offset_top = 14.0
 offset_right = 1075.0
@@ -40,6 +35,8 @@ texture_normal = ExtResource("2_qdvrb")
 script = ExtResource("3_nf4gj")
 _pausedTex = ExtResource("4_2246s")
 _unpausedTex = ExtResource("2_qdvrb")
+_increaseSpeed = NodePath("SpeedupButton")
+_decreaseSpeed = NodePath("SpeeddownButton")
 
 [node name="SpeedupButton" type="TextureButton" parent="PauseButton"]
 layout_mode = 0
