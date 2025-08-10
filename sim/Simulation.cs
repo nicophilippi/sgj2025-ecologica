@@ -102,14 +102,4 @@ public static class Simulation
 
 
     public static int RandomIntBetween(int min, int max) => Random.Next(min, max);
-
-
-
-    public static void Main()
-    {
-        int i = 0;
-        while (i++ < 50) OnTick();
-        
-        Console.WriteLine("Done!");
-    }
 }

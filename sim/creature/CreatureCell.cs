@@ -32,8 +32,8 @@ public abstract class CreatureCell(CreatureCellType type, int quantity, int maxQ
             worstPosition = myPosition;
 
         int
-            bestAttractiveness = int.MinValue,
-            worstAttractiveness = int.MaxValue;
+            bestAttractiveness = -9999,
+            worstAttractiveness = 9999;
 
         // Randomly flip the x and y iteration order
         int

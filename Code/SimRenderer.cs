@@ -82,7 +82,6 @@ public partial class SimRenderer : Node2D
         // Animals
         if (creature != null && creature.Type == CreatureCellType.Sheep && creature.Quantity > 0)
         {
-            GD.Print("Draw sheep");
             var quant = Mathf.Min(creature.Quantity, creature.MaxQuantity);
             var i = Mathf.FloorToInt(quant / (float)(creature.MaxQuantity + 1) * 4f);
             rendCell.Animal.Texture = _sheep[i];
