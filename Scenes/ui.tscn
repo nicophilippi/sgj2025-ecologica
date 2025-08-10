@@ -55,7 +55,7 @@ text = "WASD: Kamera bewegen
 H: Kamera zurücksetzen
 Leertaste: Pausieren/Spielen"
 
-[node name="PauseButton" type="TextureButton" parent="."]
+[node name="PauseButton" type="TextureButton" parent="." node_paths=PackedStringArray("_increaseSpeed", "_decreaseSpeed")]
 offset_left = 1011.0
 offset_top = 14.0
 offset_right = 1075.0
@@ -65,3 +65,18 @@ texture_normal = ExtResource("2_qdvrb")
 script = ExtResource("3_nf4gj")
 _pausedTex = ExtResource("4_2246s")
 _unpausedTex = ExtResource("2_qdvrb")
+_increaseSpeed = NodePath("SpeedupButton")
+_decreaseSpeed = NodePath("SpeeddownButton")
+
+[node name="SpeedupButton" type="TextureButton" parent="PauseButton"]
+offset_left = -70.0
+offset_right = -6.0
+offset_bottom = 64.0
+texture_normal = ExtResource("2_qdvrb")
+
+[node name="SpeeddownButton" type="TextureButton" parent="PauseButton"]
+offset_left = -141.5
+offset_top = 0.5
+offset_right = -77.5
+offset_bottom = 64.5
+texture_normal = ExtResource("2_qdvrb")
